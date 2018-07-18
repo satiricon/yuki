@@ -1,0 +1,8 @@
+name: Karen
+description: 'Organize and Share your music'
+type: module
+package: Karen
+version: VERSION
+core: 8.x
+dependencies:
+  - media
