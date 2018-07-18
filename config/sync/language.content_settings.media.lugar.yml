@@ -1,0 +1,11 @@
+uuid: 9df1f724-bee2-4b67-9ede-d15b4d65819a
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.lugar
+id: media.lugar
+target_entity_type_id: media
+target_bundle: lugar
+default_langcode: site_default
+language_alterable: false
