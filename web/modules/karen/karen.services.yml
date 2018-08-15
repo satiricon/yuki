@@ -1,0 +1,10 @@
+parameters:
+  ffmpeg_bin: '/usr/bin/ffmpeg'
+  ffprobe_bin: '/usr/bin/ffprobe'
+
+services:
+  ffmpeg:
+    class: FFMpeg\FFMpeg
+    factory: ['FFMpeg\FFMpeg', create]
+    arguments:
+      - { ffmpeg.binaries: '%ffmpeg_bin%', ffprobe.binaries: '%ffprobe_bin%'}
