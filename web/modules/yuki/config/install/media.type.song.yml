@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - yuki
+id: song
+label: Song
+description: ''
+source: yuki_audio
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_yuki_audio
+field_map:
+  format: field_media_format
+  bitrate: field_media_bitrate

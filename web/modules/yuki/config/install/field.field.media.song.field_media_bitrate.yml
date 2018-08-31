@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_bitrate
+    - media.type.song
+id: media.song.field_media_bitrate
+field_name: field_media_bitrate
+entity_type: media
+bundle: song
+label: 'Bitrate'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

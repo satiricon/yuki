@@ -5,4 +5,8 @@ package: Yuki
 version: VERSION
 core: 8.x
 dependencies:
+  - node
   - media
+  - text
+  - taxonomy
+  - field_ui

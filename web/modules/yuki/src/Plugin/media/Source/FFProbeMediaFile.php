@@ -122,6 +122,16 @@ abstract class FFProbeMediaFile extends File
 
 		$format = $this->ffprobe->format($path);
 
+		switch ($attribute_name){
+            case self::METADATA_ATTRIBUTE_FORMAT:
+                return $format->get('format_name');
+                break;
+            case self::METADATA_ATTRIBUTE_BRATE:
+                return $format->get('bit_rate');
+                break;
+
+        }
+
 		$data = $format->get($attribute_name);
 
 

@@ -67,12 +67,10 @@ class FFProbeAudio extends FFProbeMediaFile
 		$uri = $file->getFileUri();
 		$path = $this->fileSystem->realpath($uri);
 		$format = $this->ffprobe->format($path);
-
 		$data = $format->get('tags');
 
 		if(array_key_exists($attribute_name, $data)){
-
-			return $data[$attribute_name];
+		   return $data[$attribute_name];
 		}
 
 		return parent::getMetadata($media, $attribute_name);
@@ -83,7 +81,7 @@ class FFProbeAudio extends FFProbeMediaFile
 	 */
 	public function createSourceField(MediaTypeInterface $type) {
 
-		return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac']);
+		return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac ape alac']);
 	}
 
 	/**
