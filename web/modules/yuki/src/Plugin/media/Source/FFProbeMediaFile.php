@@ -125,22 +125,27 @@ abstract class FFProbeMediaFile extends File
     switch ($attribute_name) {
       case self::METADATA_ATTRIBUTE_FORMAT:
         return $format->get('format_name');
-        break;
+      break;
+
       case self::METADATA_ATTRIBUTE_BRATE:
         return $format->get('bit_rate');
-        break;
+      break;
+
       case self::METADATA_ATTRIBUTE_STREAMS:
         return $format->get('nb_streams');
-        break;
+      break;
+
       case self::METADATA_ATTRIBUTE_FORMAT_LONG:
         return $format->get('format_long_name');
-        break;
+      break;
+
       case self::METADATA_ATTRIBUTE_DURATION:
         return $format->get('duration');
-        break;
+      break;
+
       case self::METADATA_ATTRIBUTE_SCORE:
         return $format->get('probe_score');
-        break;
+      break;
     }
 
     $data = $format->get($attribute_name);

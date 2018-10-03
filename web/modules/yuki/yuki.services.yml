@@ -1,6 +1,8 @@
 parameters:
   ffmpeg_bin: '/usr/bin/ffmpeg'
   ffprobe_bin: '/usr/bin/ffprobe'
+  metadata_resolve:
+    - { regex: '/album_artist/i', value: 'artist' }
 
 services:
   ffmpeg:

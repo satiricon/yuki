@@ -34,6 +34,8 @@ class FFProbeAudio extends FFProbeMediaFile
 
 	const METADATA_ATTRIBUTE_TRACK = 'track';
 
+	const METADATA_ATTRIBUTE_ALBUM = 'album';
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -45,7 +47,8 @@ class FFProbeAudio extends FFProbeMediaFile
 			static::METADATA_ATTRIBUTE_ARTIST  => $this->t('Artist'),
 			static::METADATA_ATTRIBUTE_GENRE   => $this->t('Genre'),
 			static::METADATA_ATTRIBUTE_COMMENT => $this->t('Comment'),
-			static::METADATA_ATTRIBUTE_TRACK   => $this->t('Track')
+			static::METADATA_ATTRIBUTE_TRACK   => $this->t('Track'),
+      static::METADATA_ATTRIBUTE_ALBUM   => $this->t('Album')
 		];
 
 		return $attributes + parent::getMetadataAttributes();
@@ -68,6 +71,29 @@ class FFProbeAudio extends FFProbeMediaFile
 		$path = $this->fileSystem->realpath($uri);
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
+
+		switch ($attribute_name) {
+      case self::METADATA_ATTRIBUTE_DATE:
+      case strtoupper(self::METADATA_ATTRIBUTE_DATE):
+        return empty($data['DATE']) ? $data['date'] : $data['DATE'];
+      break;
+
+      case self::METADATA_ATTRIBUTE_TITLE:
+      case strtoupper(self::METADATA_ATTRIBUTE_TITLE):
+        return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
+      break;
+
+      case self::METADATA_ATTRIBUTE_ARTIST:
+      case strtoupper(self::METADATA_ATTRIBUTE_ARTIST):
+        return empty($data['ARTIST']) ? $data['artist'] : $data['ARTIST'];
+      break;
+
+      case self::METADATA_ATTRIBUTE_ALBUM:
+      case strtoupper(self::METADATA_ATTRIBUTE_ALBUM):
+        return empty($data['ALBUM']) ? $data['album'] : $data['ALBUM'];
+      break;
+
+    }
 
 		if(array_key_exists($attribute_name, $data)){
 		   return $data[$attribute_name];
