@@ -102,6 +102,8 @@ abstract class FFProbeMediaFile extends File
       static::METADATA_ATTRIBUTE_SCORE => $this->t('Probe Score')
     ];
 
+    $attributes = ['data' => 'Media Data'];
+
     return $attributes + parent::getMetadataAttributes();
   }
 
@@ -121,6 +123,17 @@ abstract class FFProbeMediaFile extends File
     $path = $this->fileSystem->realpath($uri);
 
     $format = $this->ffprobe->format($path);
+    if($attribute_name === 'data'){
+      $data = [
+        self::METADATA_ATTRIBUTE_FORMAT => $format->get('format_name'),
+        self::METADATA_ATTRIBUTE_BRATE => $format->get('bit_rate'),
+        self::METADATA_ATTRIBUTE_STREAMS => $format->get('nb_streams'),
+        self::METADATA_ATTRIBUTE_FORMAT_LONG => $format->get('format_long_name'),
+        self::METADATA_ATTRIBUTE_DURATION => $format->get('duration'),
+        self::METADATA_ATTRIBUTE_SCORE   => $format->get('probe_score')
+      ];
+      return $data;
+    }
 
     switch ($attribute_name) {
       case self::METADATA_ATTRIBUTE_FORMAT:

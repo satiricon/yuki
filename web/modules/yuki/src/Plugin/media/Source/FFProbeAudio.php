@@ -107,7 +107,7 @@ class FFProbeAudio extends FFProbeMediaFile
 	 */
 	public function createSourceField(MediaTypeInterface $type) {
 
-		return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac ape alac']);
+		return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac ape alac m4a webm']);
 	}
 
 	/**
