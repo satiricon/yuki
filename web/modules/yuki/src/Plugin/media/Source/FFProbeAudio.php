@@ -17,7 +17,7 @@ use Drupal\media\MediaTypeInterface;
  *   label = @Translation("FFProbe Audio"),
  *   description = @Translation("Audio File with ffmpeg caps."),
  *   allowed_field_types = {"file"},
- *   default_thumbnail_filename = "generic.png"
+ *   default_thumbnail_filename = "audio.png"
  * )
  */
 class FFProbeAudio extends FFProbeMediaFile
@@ -71,6 +71,11 @@ class FFProbeAudio extends FFProbeMediaFile
 		$path = $this->fileSystem->realpath($uri);
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
+
+    if($attribute_name === 'name')
+    {
+      return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
+    }
 
 		switch ($attribute_name) {
       case self::METADATA_ATTRIBUTE_DATE:

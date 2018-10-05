@@ -1,0 +1,11 @@
+<?php
+
+use \Drupal\Core\Entity\EntityTypeInterface;
+/**
+ * Implements hook_entity_base_field_info_alter().
+ */
+function yuki_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if($entity_type->id() === 'media'){
+    $fields['name']->setRequired(FALSE);
+  }
+}
