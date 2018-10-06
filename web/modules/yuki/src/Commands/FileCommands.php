@@ -27,47 +27,34 @@ class FileCommands
    * @aliases yufi
    *
    */
-  public function files($path)
+  public function files($path, $regex)
   {
     $path = realpath($path);
 
     //Ver si conviene
-    //$objects = file_scan_directory($path, '/.+/');
+    $objects = file_scan_directory($path, $regex);
 
-    $objects = new \RecursiveIteratorIterator(
-      new \RecursiveDirectoryIterator($path),
-      \RecursiveIteratorIterator::SELF_FIRST);
-    foreach($objects as $name => $object) {
-      /** @var $object \SplFileInfo */
-      if(!$object->isDir()) {
-        $this->addFile($object);
-      }
-
+    foreach($objects as $name => $object)
+    {
+      $this->addFile($object);
     }
-
 
   }
 
-  /**
-   * @param \SplFileInfo $fileInfo
-   */
-  public function addFile(\SplFileInfo $fileInfo) {
-    $values = $this->mapFileInfo($fileInfo);
+  public function addFile($fileObject) {
+    $values = $this->mapFileInfo($fileObject);
 
     $file = $this->fileStorage->create($values);
     $file->save();
   }
 
   /**
-   * @param \SplFileInfo $fileInfo
-   *
    * @return array
    */
-  public function mapFileInfo(\SplFileInfo $fileInfo) {
+  public function mapFileInfo($fileObject) {
     return [
-      'filename'  => $fileInfo->getFilename(),
-      'uri'       =>  'file:///'.$fileInfo->getRealPath(),
-      'filesize'  =>  $fileInfo->getSize(),
+      'filename'  => $fileObject->filename,
+      'uri'       =>  'file://'.$fileObject->uri,
       'status'    => true
     ];
   }
