@@ -59,6 +59,6 @@ class MediaStream extends LocalStream {
   public function getExternalUrl() {
     //return $this->getUrlGenerator()->generateFromRoute($route_name, $route_parameters, $options);
     $path = str_replace('\\', '/', $this->getTarget());
-    return $this->getUrlGenerator()->generateFromRoute('system.private_file_download',  ['filepath' => $path], ['absolute' => TRUE, 'path_processing' => FALSE]);
+    return $this->getUrlGenerator()->generateFromRoute('yuki.media_file_download',  ['filepath' => $path], ['absolute' => TRUE, 'path_processing' => FALSE]);
   }
 }

@@ -29,3 +29,7 @@ services:
     class: Drupal\yuki\StreamWrapper\MediaStream
     tags:
       - { name: stream_wrapper, scheme: media }
+  yuki.path_processor.files:
+    class: Drupal\yuki\PathProcessor\PathProcessorFiles
+    tags:
+      - { name: path_processor_inbound, priority: 200 }
