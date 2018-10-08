@@ -50,8 +50,6 @@ class NewFileSubscriber implements EventSubscriberInterface
 
     $media->set($mediaConfiguration['source_field'], $file);
 
-
-
     $media->save();
 
   }

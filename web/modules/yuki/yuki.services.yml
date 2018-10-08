@@ -25,3 +25,7 @@ services:
       - method: setMediaStorage
         arguments:
           - "@yuki.media_storage"
+  stream_wrapper.media:
+    class: Drupal\yuki\StreamWrapper\MediaStream
+    tags:
+      - { name: stream_wrapper, scheme: media }

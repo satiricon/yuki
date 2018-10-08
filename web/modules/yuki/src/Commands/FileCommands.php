@@ -66,10 +66,11 @@ class FileCommands
 
 
   public function addFile($fileObject) {
+
     $values = $this->mapFileInfo($fileObject);
 
     $file = $this->fileStorage->create($values);
-    //$file->save();
+    $file->save();
 
     return $file;
   }
@@ -80,7 +81,7 @@ class FileCommands
   public function mapFileInfo($fileObject) {
     return [
       'filename'  => $fileObject->filename,
-      'uri'       =>  'file://'.$fileObject->uri,
+      'uri'       =>  'media://'.$fileObject->uri,
       'status'    => true
     ];
   }

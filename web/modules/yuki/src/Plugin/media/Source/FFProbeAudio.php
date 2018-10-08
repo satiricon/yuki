@@ -68,7 +68,6 @@ class FFProbeAudio extends FFProbeMediaFile
 		}
 
 		$uri = $file->getFileUri();
-		dump($uri);
 		$path = $this->fileSystem->realpath($uri);
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
