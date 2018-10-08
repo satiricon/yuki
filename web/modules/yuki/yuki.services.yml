@@ -13,3 +13,15 @@ services:
   ffprobe:
     class: FFMpeg\FFProbe
     factory: 'ffmpeg:getFFProbe'
+  yuki.media_storage:
+    class: \Drupal\Core\Entity\Sql\SqlContentEntityStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['media']
+  newfile_subscriber:
+    class: \Drupal\yuki\Commands\EventSubscriber\NewFileSubscriber
+    tags:
+      - { name: 'event_subscriber' }
+    calls:
+      - method: setMediaStorage
+        arguments:
+          - "@yuki.media_storage"

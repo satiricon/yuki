@@ -16,3 +16,6 @@ services:
       - method: setFileStorage
         arguments:
           - "@yuki.file_storage"
+      - method: setEventDispatcher
+        arguments:
+          - "@event_dispatcher"

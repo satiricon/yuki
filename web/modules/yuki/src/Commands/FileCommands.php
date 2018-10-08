@@ -9,7 +9,12 @@
 namespace Drupal\yuki\Commands;
 
 
+use Drupal\file\Entity\File;
 use Drupal\file\FileStorageInterface;
+use Drupal\yuki\Commands\Events\NewFileEvent;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FileCommands
 {
@@ -20,6 +25,11 @@ class FileCommands
   private $fileStorage;
 
   /**
+   * @var $eventDispatcher EventDispatcherInterface
+   */
+  private $eventDispatcher;
+
+  /**
    * @param $path
    *  The Path
    *
@@ -27,25 +37,41 @@ class FileCommands
    * @aliases yufi
    *
    */
-  public function files($path, $regex)
+  public function files(string $path, string $regex)
   {
     $path = realpath($path);
 
-    //Ver si conviene
     $objects = file_scan_directory($path, $regex);
 
     foreach($objects as $name => $object)
     {
-      $this->addFile($object);
+      $file = $this->addFile($object);
+
+      $this->dispatchFileEvent($file);
     }
 
   }
+
+  /**
+   * @param File $file
+   */
+  public function dispatchFileEvent(File $file)
+  {
+    $event = new NewFileEvent();
+    $event->setFile($file);
+
+    $this->eventDispatcher->dispatch(NewFileEvent::EVENT_NAME, $event);
+
+  }
+
 
   public function addFile($fileObject) {
     $values = $this->mapFileInfo($fileObject);
 
     $file = $this->fileStorage->create($values);
-    $file->save();
+    //$file->save();
+
+    return $file;
   }
 
   /**
@@ -77,5 +103,13 @@ class FileCommands
     return $this->fileStorage;
   }
 
+
+  /**
+   * @param EventDispatcherInterface $eventDispatcher
+   */
+  public function setEventDispatcher(EventDispatcherInterface $eventDispatcher) {
+
+    $this->eventDispatcher = $eventDispatcher;
+  }
 
 }
