@@ -3,6 +3,7 @@
 namespace Drupal\yuki\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,15 +41,11 @@ class FileDownloadController extends ControllerBase {
   public function download(Request $request, $scheme = 'media') {
 
     $target = $request->query->get('file');
-    // Merge remaining path arguments into relative file path.
-    $uri = $scheme . ':///' . $target;
-    dump($uri);
-    dump(file_stream_wrapper_valid_scheme($scheme), file_exists($uri));
-    die();
 
+    $uri = $scheme . '://' . $target;
 
     if (file_stream_wrapper_valid_scheme($scheme) && file_exists($uri)) {
-      // Let other modules provide headers and controls access to the file.
+
       $headers = $this->moduleHandler()->invokeAll('file_download', [$uri]);
 
       foreach ($headers as $result) {
@@ -58,10 +55,7 @@ class FileDownloadController extends ControllerBase {
       }
 
       if (count($headers)) {
-        // \Drupal\Core\EventSubscriber\FinishResponseSubscriber::onRespond()
-        // sets response as not cacheable if the Cache-Control header is not
-        // already modified. We pass in FALSE for non-private schemes for the
-        // $public parameter to make sure we don't change the headers.
+
         return new BinaryFileResponse($uri, 200, $headers, $scheme !== 'private');
       }
 

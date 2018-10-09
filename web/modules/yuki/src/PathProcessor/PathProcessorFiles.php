@@ -19,10 +19,9 @@ class PathProcessorFiles implements InboundPathProcessorInterface {
   public function processInbound($path, Request $request) {
 
     if (strpos($path, '/yuki/media/files/') === 0 && !$request->query->has('file')) {
-      $file_path = preg_replace('|^\/yuki\/media\/files\/|', '', $path);
+      $file_path = str_replace('/yuki/media/files', '', $path);
       $request->query->set('file', $file_path);
-      dump($request);
-      die();
+
       return '/yuki/media/files';
     }
     return $path;
