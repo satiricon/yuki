@@ -45,7 +45,6 @@ class FileCommands
 
     foreach($objects as $name => $object)
     {
-      dump($object);
       $file = $this->addFile($object);
 
       $this->dispatchFileEvent($file);
@@ -71,7 +70,7 @@ class FileCommands
     $values = $this->mapFileInfo($fileObject);
 
     $file = $this->fileStorage->create($values);
-    //$file->save();
+    $file->save();
 
     return $file;
   }
