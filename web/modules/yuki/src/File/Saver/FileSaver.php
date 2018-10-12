@@ -20,8 +20,11 @@ abstract class FileSaver implements SaverInterface {
 
       $file = $this->getFileStorage()->create($values);
       $file->save();
+
+      return $file;
     }
 
+    return false;
   }
 
   public function isExtensionRelevant(){

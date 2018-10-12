@@ -1,9 +1,4 @@
 services:
-  yuki.commands:
-    class: \Drupal\yuki\Commands\YukiCommands
-    tags:
-      - { name: drush.command }
-
   yuki.file.commands:
     class: \Drupal\yuki\Commands\FileCommands
     tags:

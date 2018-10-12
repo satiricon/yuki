@@ -19,7 +19,7 @@ services:
     factory: 'entity_type.manager:getStorage'
     arguments: ['media']
   newfile_subscriber:
-    class: \Drupal\yuki\Commands\EventSubscriber\NewFileSubscriber
+    class: \Drupal\yuki\Subscriber\NewFileSubscriber
     tags:
       - { name: 'event_subscriber' }
     calls:
@@ -51,3 +51,6 @@ services:
       - method: setFileExtensions
         arguments:
           - "%yuki.saver.song.extensions%"
+      - method: setEventDispatcher
+        arguments:
+          - "@event_dispatcher"

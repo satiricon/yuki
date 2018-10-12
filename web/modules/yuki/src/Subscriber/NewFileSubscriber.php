@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\yuki\Commands\EventSubscriber;
+namespace Drupal\yuki\Subscriber;
 
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\yuki\Commands\Events\NewFileEvent;
+use Drupal\yuki\Event\NewFileEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NewFileSubscriber implements EventSubscriberInterface
@@ -44,7 +44,7 @@ class NewFileSubscriber implements EventSubscriberInterface
   {
     $file = $event->getFile();
 
-    $media = $this->mediaStorage->create(['bundle' => 'song']);
+    $media = $this->mediaStorage->create(['bundle' => $event->getBundle()]);
     $mediaSource = $media->getSource();
     $mediaConfiguration = $mediaSource->getConfiguration();
 

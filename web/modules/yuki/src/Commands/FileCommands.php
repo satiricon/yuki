@@ -8,14 +8,7 @@
 
 namespace Drupal\yuki\Commands;
 
-
-use Drupal\file\Entity\File;
-use Drupal\file\FileStorageInterface;
-use Drupal\yuki\Commands\Events\NewFileEvent;
 use Drupal\yuki\File\Saver\SaverChainInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FileCommands
 {
