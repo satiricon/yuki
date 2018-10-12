@@ -9,3 +9,16 @@ function yuki_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity
     $fields['name']->setRequired(FALSE);
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function yuki_file_insert(\Drupal\file\Entity\File $file)
+{
+
+  /*$event = new NewFileEvent();
+  $event->setFile($file);
+
+  $this->eventDispatcher->dispatch(NewFileEvent::EVENT_NAME, $event);*/
+
+}

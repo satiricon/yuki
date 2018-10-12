@@ -3,6 +3,7 @@ parameters:
   ffprobe_bin: '/usr/bin/ffprobe'
   metadata_resolve:
     - { regex: '/album_artist/i', value: 'artist' }
+  yuki.saver.song.extensions: ['flac', 'mp3', 'wav', 'aac', 'ape', 'alac']
 
 services:
   ffmpeg:
@@ -33,3 +34,20 @@ services:
     class: Drupal\yuki\PathProcessor\PathProcessorFiles
     tags:
       - { name: path_processor_inbound, priority: 200 }
+  yuki.file_storage:
+    class: \Drupal\file\FileStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['file']
+  yuki.saver_chain:
+    class: Drupal\yuki\File\Saver\FileSaverChain
+  yuki.saver.song:
+    class: Drupal\yuki\File\Saver\SongSaver
+    tags:
+      - { name: yuki.saver }
+    calls:
+      - method: setFileStorage
+        arguments:
+          - "@yuki.file_storage"
+      - method: setFileExtensions
+        arguments:
+          - "%yuki.saver.song.extensions%"

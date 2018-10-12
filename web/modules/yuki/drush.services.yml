@@ -4,18 +4,11 @@ services:
     tags:
       - { name: drush.command }
 
-  yuki.file_storage:
-    class: \Drupal\file\FileStorage
-    factory: 'entity_type.manager:getStorage'
-    arguments: ['file']
   yuki.file.commands:
     class: \Drupal\yuki\Commands\FileCommands
     tags:
       - { name: drush.command }
     calls:
-      - method: setFileStorage
+      - method: setSaverChain
         arguments:
-          - "@yuki.file_storage"
-      - method: setEventDispatcher
-        arguments:
-          - "@event_dispatcher"
+          - "@yuki.saver_chain"
