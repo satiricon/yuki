@@ -2,10 +2,19 @@
 
 namespace Drupal\yuki\Plugin\media\Source;
 use Drupal\Core\Annotation\Translation;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Field\FieldTypePluginManagerInterface;
+use Drupal\Core\File\FileSystem;
 use Drupal\media\Annotation\MediaSource as MediaSource;
 use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
+use Drupal\yuki\Entity\PathInfoMapper;
+use Drupal\yuki\Mapper\PathMapperCollection;
+use FFMpeg\FFProbe;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * File entity media source.
@@ -22,6 +31,11 @@ use Drupal\media\MediaTypeInterface;
  */
 class FFProbeAudio extends FFProbeMediaFile
 {
+
+
+  /** @var $pathMapper PathMapperCollection */
+  protected $pathMapper;
+
 	const METADATA_ATTRIBUTE_TITLE = 'title';
 
 	const METADATA_ATTRIBUTE_ARTIST = 'artist';
@@ -35,6 +49,63 @@ class FFProbeAudio extends FFProbeMediaFile
 	const METADATA_ATTRIBUTE_TRACK = 'track';
 
 	const METADATA_ATTRIBUTE_ALBUM = 'album';
+
+  /**
+   * Constructs a new class instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   Entity type manager service.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   Entity field manager service.
+   * @param \Drupal\Core\Field\FieldTypePluginManagerInterface $field_type_manager
+   *   The field type plugin manager service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
+   * @param \Drupal\Core\File\FileSystem $file_system
+   *   The file system service.
+   * @param \FFMpeg\FFProbe
+   *    The FFmpeg Probe
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    EntityFieldManagerInterface $entity_field_manager,
+    FieldTypePluginManagerInterface $field_type_manager,
+    ConfigFactoryInterface $config_factory,
+    FileSystem $file_system,
+    FFProbe $ffprobe,
+    PathMapperCollection $path_mapper)
+  {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $entity_field_manager, $field_type_manager, $config_factory, $file_system, $ffprobe);
+
+    $this->pathMapper = $path_mapper;
+  }
+
+
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
+  {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager'),
+      $container->get('entity_field.manager'),
+      $container->get('plugin.manager.field.field_type'),
+      $container->get('config.factory'),
+      $container->get('file_system'),
+      $container->get('ffprobe'),
+      $container->get('yuki.mapper_chain'));
+  }
+
+
 
 	/**
 	 * {@inheritdoc}
@@ -97,14 +168,17 @@ class FFProbeAudio extends FFProbeMediaFile
       case strtoupper(self::METADATA_ATTRIBUTE_ALBUM):
         return empty($data['ALBUM']) ? $data['album'] : $data['ALBUM'];
       break;
-
     }
 
 		if(array_key_exists($attribute_name, $data)){
 		   return $data[$attribute_name];
 		}
 
-		return parent::getMetadata($media, $attribute_name);
+    if($value = $this->pathMapper->map($attribute_name, $path)){
+      return $value;
+    }
+
+    return parent::getMetadata($media, $attribute_name);
 	}
 
 	/**

@@ -18,6 +18,14 @@ services:
     class: \Drupal\Core\Entity\Sql\SqlContentEntityStorage
     factory: 'entity_type.manager:getStorage'
     arguments: ['media']
+  yuki.file_storage:
+    class: \Drupal\file\FileStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['file']
+  yuki.mapper_storage:
+    class: Drupal\Core\Config\Entity\ConfigEntityStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['mapper']
   newfile_subscriber:
     class: \Drupal\yuki\Subscriber\NewFileSubscriber
     tags:
@@ -34,10 +42,12 @@ services:
     class: Drupal\yuki\PathProcessor\PathProcessorFiles
     tags:
       - { name: path_processor_inbound, priority: 200 }
-  yuki.file_storage:
-    class: \Drupal\file\FileStorage
-    factory: 'entity_type.manager:getStorage'
-    arguments: ['file']
+  yuki.mapper_chain:
+    class: Drupal\yuki\Mapper\PathMapperCollection
+    calls:
+      - method: setMapperStorage
+        arguments:
+          - "@yuki.mapper_storage"
   yuki.saver_chain:
     class: Drupal\yuki\File\Saver\FileSaverChain
   yuki.saver.song:

@@ -75,6 +75,15 @@ class PathInfoMapper extends ConfigEntityBase {
     return $this->weight;
   }
 
+  public function map($attribute_name, $path) {
+    $matches = array();
+    preg_match($this->getRegexp(), $path,$matches);
+
+    dump($attribute_name, $path, $matches, $this->getRegexp());
+
+    return $matches[$attribute_name];
+  }
+
   /**
    * Sorts active blocks by weight; sorts inactive blocks by name.
    */

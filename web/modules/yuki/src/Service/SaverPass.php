@@ -9,9 +9,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class SaverPass implements CompilerPassInterface {
 
-  /**
-   * You can modify the container here before it is dumped to PHP code.
-   */
+
   public function process(ContainerBuilder $container)
   {
 
@@ -27,4 +25,5 @@ class SaverPass implements CompilerPassInterface {
       $definition->addMethodCall('addSaver', array(new Reference($id)));
     }
   }
+
 }
