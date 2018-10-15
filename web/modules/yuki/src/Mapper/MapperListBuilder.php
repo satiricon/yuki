@@ -12,7 +12,8 @@ class MapperListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     $header['label'] = $this->t('Mapper');
-    $header['id'] = $this->t('Machine name');
+    $header['regexp'] = $this->t('Regexp');
+    $header['weight'] = $this->t('Weight');
     return $header + parent::buildHeader();
   }
 
@@ -21,7 +22,8 @@ class MapperListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    $row['id'] = $entity->id();
+    $row['regexp'] = $entity->get('regexp');
+    $row['weight'] = $entity->get('weight');
     return $row + parent::buildRow($entity);
   }
 }

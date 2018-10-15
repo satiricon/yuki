@@ -38,12 +38,20 @@ class MapperForm extends EntityForm {
     ];
 
     $form['regexp'] = [
-      '#type' => 'textfield',
+      '#type' => 'textarea',
       '#default_value' => $mapper->getRegexp() ? $mapper->getRegexp() : '',
       '#title' => $this->t('Regexp'),
-      '#description' => $this->t('The Named Regexp to resoslve the data'),
+      '#description' => $this->t('The Named Regexp to resolve the data'),
       '#required' => TRUE,
     ];
+
+    $form['weight'] = array(
+      '#type' => 'weight',
+      '#title' => $this
+        ->t('Weight'),
+      '#default_value' => $mapper->get('weight'),
+      '#delta' => 9999,
+    );
 
     /*$definitions = $this->importerManager->getDefinitions();
     $options = [];

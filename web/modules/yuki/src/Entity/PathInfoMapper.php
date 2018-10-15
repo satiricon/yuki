@@ -3,6 +3,7 @@
 namespace Drupal\yuki\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\Core\Config\Entity\ConfigEntityInterface;
 
 /**
  * Defines the Importer entity.
@@ -60,9 +61,38 @@ class PathInfoMapper extends ConfigEntityBase {
    */
   protected $regexp;
 
+  /**
+   * @var integer
+   */
+  protected $weight;
+
   public function getRegexp(){
 
     return $this->regexp;
+  }
+
+  public function getWeight(){
+    return $this->weight;
+  }
+
+  /**
+   * Sorts active blocks by weight; sorts inactive blocks by name.
+   */
+  public static function sort(ConfigEntityInterface $a, ConfigEntityInterface $b) {
+    // Separate enabled from disabled.
+    $status = (int) $b->status() - (int) $a->status();
+    if ($status !== 0) {
+      return $status;
+    }
+
+    // Sort by weight.
+    $weight = $a->getWeight() - $b->getWeight();
+    if ($weight) {
+      return $weight;
+    }
+
+    // Sort by label.
+    return strcmp($a->label(), $b->label());
   }
 
 }

@@ -11,3 +11,6 @@ yuki.mapper.*:
     regexp:
       type: string
       label: Regexp
+    weight:
+      type: integer
+      label: Weight
