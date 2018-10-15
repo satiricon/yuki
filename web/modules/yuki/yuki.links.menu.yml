@@ -1,0 +1,7 @@
+# Mapper entity menu items
+entity.mapper.collection:
+  title: 'Mapper'
+  route_name: entity.mapper.collection
+  description: 'List Mapper entities'
+  parent: system.admin_structure
+  weight: 99

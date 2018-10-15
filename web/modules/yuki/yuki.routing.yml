@@ -15,3 +15,20 @@ yuki.media_file_download:
     filepath: .+
     _access: 'TRUE'
     _permission: 'access content'
+
+
+entity.mapper.add_form:
+  path: '/admin/structure/mapper/add'
+  defaults:
+    _entity_form: 'mapper.add'
+    _title: 'Add Mapper'
+  requirements:
+    _permission: 'administer content types'
+
+entity.mapper.collection:
+  path: '/admin/structure/mapper'
+  defaults:
+    _entity_list: 'mapper'
+    _title: 'Mapper List'
+  requirements:
+    _permission: 'administer content types'

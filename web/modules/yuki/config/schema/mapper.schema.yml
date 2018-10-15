@@ -1,0 +1,13 @@
+yuki.mapper.*:
+  type: config_entity
+  label: Mapper Config
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    regexp:
+      type: string
+      label: Regexp
