@@ -27,8 +27,6 @@ class FileCommands
   public function files(string $path, string $regex)
   {
 
-    dump(get_class(\Drupal::entityTypeManager()->getStorage('mapper')));
-
     $path = realpath($path);
 
     $objects = file_scan_directory($path, $regex);

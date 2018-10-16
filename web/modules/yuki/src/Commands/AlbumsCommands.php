@@ -37,13 +37,19 @@ class AlbumsCommands
 
     foreach ($songs as $song) {
 
+      $title = $song->get('field_album')->value;
+
+      if(empty($title)){
+        $title = 'Unknown';
+      }
+
       $node = array_shift($this->nodeStorage->loadByProperties(
-        ['title' => $song->get('field_album')->value]));
+        ['title' => $title]));
 
       if(!$node) {
         $values = [
           'type' => 'album',
-          'title' => $song->get('field_album')->value
+          'title' => $title
         ];
         /** @var NodeInterface $node */
         $node = $this->nodeStorage->create($values);
