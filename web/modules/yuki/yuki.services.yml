@@ -26,6 +26,10 @@ services:
     class: Drupal\Core\Config\Entity\ConfigEntityStorage
     factory: 'entity_type.manager:getStorage'
     arguments: ['mapper']
+  yuki.node_storage:
+    class: \Drupal\Core\Entity\Sql\SqlContentEntityStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['node']
   newfile_subscriber:
     class: \Drupal\yuki\Subscriber\NewFileSubscriber
     tags:

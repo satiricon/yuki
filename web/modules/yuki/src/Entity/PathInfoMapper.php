@@ -79,8 +79,6 @@ class PathInfoMapper extends ConfigEntityBase {
     $matches = array();
     preg_match($this->getRegexp(), $path,$matches);
 
-    dump($attribute_name, $path, $matches, $this->getRegexp());
-
     return $matches[$attribute_name];
   }
 
