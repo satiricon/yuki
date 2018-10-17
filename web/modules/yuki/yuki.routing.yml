@@ -17,18 +17,34 @@ yuki.media_file_download:
     _permission: 'access content'
 
 
-entity.mapper.add_form:
-  path: '/admin/structure/mapper/add'
+entity.path_mapper.add_form:
+  path: '/admin/structure/path/mapper/add'
   defaults:
     _entity_form: 'mapper.add'
     _title: 'Add Mapper'
   requirements:
     _permission: 'administer content types'
 
-entity.mapper.collection:
-  path: '/admin/structure/mapper'
+entity.path_mapper.collection:
+  path: '/admin/structure/path/mapper'
   defaults:
     _entity_list: 'mapper'
+    _title: 'Mapper List'
+  requirements:
+    _permission: 'administer content types'
+
+entity.tag_mapper.add_form:
+  path: '/admin/structure/tag/mapper/add'
+  defaults:
+    _entity_form: 'tag_mapper.add'
+    _title: 'Add Mapper'
+  requirements:
+    _permission: 'administer content types'
+
+entity.tag_mapper.collection:
+  path: '/admin/structure/tag/mapper'
+  defaults:
+    _entity_list: 'tag_mapper'
     _title: 'Mapper List'
   requirements:
     _permission: 'administer content types'

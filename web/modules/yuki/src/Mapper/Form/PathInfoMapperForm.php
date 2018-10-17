@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
 
-class MapperForm extends EntityForm {
+class PathInfoMapperForm extends EntityForm {
 
 
 

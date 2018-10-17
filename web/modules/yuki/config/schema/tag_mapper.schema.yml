@@ -1,0 +1,14 @@
+yuki.tag_mapper.*:
+  type: config_entity
+  label: Mapper Config
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    fields:
+      type: string
+      label: 'Fields'
+      cardinality: -1
