@@ -1,0 +1,23 @@
+uuid: 261ef92b-9341-4ea7-a70f-0e9b5086d9b8
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+    - media
+id: media.field_media_yuki_logfile
+field_name: field_media_yuki_logfile
+entity_type: media
+type: file
+settings:
+  target_type: file
+  display_field: false
+  display_default: false
+  uri_scheme: public
+module: file
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

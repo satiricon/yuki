@@ -1,0 +1,8 @@
+uuid: 1c9cb760-4ee5-4950-9b3b-fbcf48fa0171
+langcode: en
+status: true
+dependencies: {  }
+id: mapper3
+label: mapper3
+regexp: '/.*\/(?P<genre>[a-z0-9]+)\/.*\/(?P<year>[0-9]{4})\s-\s.+\s-\s(?P<album>.*)\s\[[0-9-]+\]\/(?P<num>[0-9]{2})\s-\s(?P<artist>.+)\s-\s(?P<title>.*)\..*/i'
+weight: 3

@@ -1,0 +1,19 @@
+uuid: 322299b3-b926-4cf2-a73b-d9d4c556a2af
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - yuki
+id: media.field_data
+field_name: field_data
+entity_type: media
+type: probe_media_data
+settings: {  }
+module: yuki
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

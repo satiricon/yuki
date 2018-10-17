@@ -1,0 +1,30 @@
+uuid: b82eb231-ec1d-432d-bd74-c2ba5b7acc12
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_song
+    - media.type.song
+    - node.type.album
+_core:
+  default_config_hash: 48kwaTIYNMU5A7oV5p7_67WbCrbbfwnlwH8hCzpyRWs
+id: node.album.field_song
+field_name: field_song
+entity_type: node
+bundle: album
+label: Song
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      song: song
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

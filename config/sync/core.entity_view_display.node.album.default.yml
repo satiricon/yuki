@@ -1,0 +1,32 @@
+uuid: 4a6eac11-93a3-46ad-818d-c6a124d52022
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.album.body
+    - field.field.node.album.field_cover
+    - field.field.node.album.field_song
+    - node.type.album
+  module:
+    - image
+    - user
+id: node.album.default
+targetEntityType: node
+bundle: album
+mode: default
+content:
+  field_cover:
+    weight: 101
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  body: true
+  field_song: true

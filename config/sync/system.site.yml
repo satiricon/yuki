@@ -1,0 +1,14 @@
+uuid: 50b7d113-c136-4ced-9bd2-51334e489e4e
+name: Karen
+mail: david.satiricon@gmail.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /user/login
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

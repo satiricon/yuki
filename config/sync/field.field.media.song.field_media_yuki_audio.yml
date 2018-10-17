@@ -1,0 +1,29 @@
+uuid: 51021319-4c22-4c9d-9185-8ad8055c3da6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_yuki_audio
+    - media.type.song
+  module:
+    - file
+_core:
+  default_config_hash: mikbRWzTqEqUtCY3TanZ4_bsClb088MQktdgIOdZWWM
+id: media.song.field_media_yuki_audio
+field_name: field_media_yuki_audio
+entity_type: media
+bundle: song
+label: 'FFProbe Audio'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_extensions: 'mp3 wav aac flac ape alac'
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

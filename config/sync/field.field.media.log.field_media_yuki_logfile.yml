@@ -1,0 +1,27 @@
+uuid: 6be6033a-8947-4515-adcb-43c1a5b0200a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_yuki_logfile
+    - media.type.log
+  module:
+    - file
+id: media.log.field_media_yuki_logfile
+field_name: field_media_yuki_logfile
+entity_type: media
+bundle: log
+label: 'Yuki Log File'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_extensions: log
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

@@ -1,0 +1,19 @@
+uuid: 19438b00-e9c1-4a30-bf4b-16913b496b25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_artist
+    - media.type.song
+id: media.song.field_artist
+field_name: field_artist
+entity_type: media
+bundle: song
+label: Artist
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

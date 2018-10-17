@@ -1,0 +1,13 @@
+uuid: 35fbbb24-0791-4c88-b80f-aca49e512b12
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9XxpbEMMVBo3ClRPs3DYATSz0P1YcmORGGKN7eVJ7xc
+name: Album
+type: album
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

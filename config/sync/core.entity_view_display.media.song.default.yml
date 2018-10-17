@@ -1,0 +1,46 @@
+uuid: 707f2c39-5984-4d74-9d81-6738efa24430
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.song.field_album
+    - field.field.media.song.field_artist
+    - field.field.media.song.field_data
+    - field.field.media.song.field_media_yuki_audio
+    - media.type.song
+  module:
+    - yuki
+id: media.song.default
+targetEntityType: media
+bundle: song
+mode: default
+content:
+  field_album:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_artist:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_data:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: default_probe_media_data_formatter
+    region: content
+hidden:
+  created: true
+  field_media_yuki_audio: true
+  name: true
+  thumbnail: true
+  uid: true

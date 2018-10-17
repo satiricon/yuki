@@ -1,0 +1,20 @@
+uuid: f558cdda-e98d-457e-af7e-6db283fafd59
+langcode: en
+status: true
+dependencies:
+  module:
+    - yuki
+_core:
+  default_config_hash: B8JFmJ28BCMSHrPuvVlrgjubjjROPKAmeeFFnYs4AIc
+id: song
+label: Song
+description: ''
+source: yuki_audio
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_yuki_audio
+field_map:
+  artist: field_artist
+  album: field_album
+  data: field_data

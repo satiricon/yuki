@@ -1,0 +1,28 @@
+uuid: 5d0014be-3fbc-4346-8b76-e638bfcb382f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_data
+    - media.type.song
+  module:
+    - yuki
+id: media.song.field_data
+field_name: field_data
+entity_type: media
+bundle: song
+label: Data
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    streams: '0'
+    format: ''
+    format_long: ''
+    duration: '0'
+    bitrate: '0'
+    probe_score: '0'
+default_value_callback: ''
+settings: {  }
+field_type: probe_media_data

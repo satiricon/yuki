@@ -1,0 +1,19 @@
+uuid: 4ee47b62-57d4-4bc4-ba31-0edcc79c10ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_content
+    - media.type.log
+id: media.log.field_content
+field_name: field_content
+entity_type: media
+bundle: log
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

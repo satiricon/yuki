@@ -1,0 +1,24 @@
+uuid: 174dc14a-fcf2-494f-a7fe-53462e557b6b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.album
+  module:
+    - text
+_core:
+  default_config_hash: O9Sr7Y77jmS0pN_0CtD5SlBJoD2isu78b-jh4lob5K0
+id: node.album.body
+field_name: body
+entity_type: node
+bundle: album
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

@@ -1,0 +1,16 @@
+uuid: fe0bc90a-547a-4c25-bcb4-49a852e3aef6
+langcode: en
+status: true
+dependencies:
+  module:
+    - yuki
+id: log
+label: Log
+description: ''
+source: yuki_logfile
+queue_thumbnail_downloads: false
+new_revision: false
+source_configuration:
+  source_field: field_media_yuki_logfile
+field_map:
+  content: field_content
