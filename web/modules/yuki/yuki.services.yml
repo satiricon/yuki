@@ -68,3 +68,6 @@ services:
       - method: setEventDispatcher
         arguments:
           - "@event_dispatcher"
+  yuki.mapper_manager:
+    class: Drupal\yuki\Plugin\Mapper\MapperManager
+    parent: default_plugin_manager

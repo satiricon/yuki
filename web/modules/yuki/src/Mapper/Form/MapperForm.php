@@ -4,9 +4,37 @@ namespace Drupal\yuki\Mapper\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\yuki\Entity\Mapper;
 use Drupal\yuki\Entity\PathInfoMapper;
+use Drupal\yuki\Plugin\Mapper\MapperManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class PathInfoMapperForm extends EntityForm {
+
+class MapperForm extends EntityForm {
+
+
+  /**
+   * @var MapperManager
+   */
+  protected $mapperManager;
+
+  /**
+   * ImporterForm constructor.
+   *
+   * @param MapperManager $importerManager
+   */
+  public function __construct(MapperManager $mapperManager) {
+    $this->mapperManager = $mapperManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('yuki.mapper_manager')
+    );
+  }
 
 
 
@@ -16,7 +44,7 @@ class PathInfoMapperForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
-    /** @var PathInfoMapper $mapper */
+    /** @var Mapper $mapper */
     $mapper = $this->entity;
 
     $form['label'] = [
@@ -37,27 +65,29 @@ class PathInfoMapperForm extends EntityForm {
       '#disabled' => !$mapper->isNew(),
     ];
 
-    $form['regexp'] = [
+    $form['data'] = [
       '#type' => 'textarea',
-      '#default_value' => $mapper->getRegexp() ? $mapper->getRegexp() : '',
-      '#title' => $this->t('Regexp'),
-      '#description' => $this->t('The Named Regexp to resolve the data'),
+      '#default_value' => $mapper->getData() ? $mapper->getData() : '',
+      '#title' => $this->t('Data'),
+      '#description' => $this->t('The Data Necesary to resolve the fields'),
       '#required' => TRUE,
     ];
 
-    $form['weight'] = array(
-      '#type' => 'weight',
-      '#title' => $this
-        ->t('Weight'),
-      '#default_value' => $mapper->get('weight'),
-      '#delta' => 9999,
-    );
 
-    /*$definitions = $this->importerManager->getDefinitions();
+    $definitions = $this->mapperManager->getDefinitions();
     $options = [];
     foreach ($definitions as $id => $definition) {
       $options[$id] = $definition['label'];
-    }*/
+    }
+
+    $form['plugin'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Plugin'),
+      '#default_value' => $mapper->getPluginId(),
+      '#options' => $options,
+      '#description' => $this->t('The plugin to be used with this importer.'),
+      '#required' => TRUE,
+    ];
 
     return $form;
   }

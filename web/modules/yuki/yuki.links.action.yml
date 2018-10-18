@@ -1,11 +1,5 @@
-entity.path_mapper.add_form:
-  route_name: entity.path_mapper.add_form
-  title: 'Add Path Mapper'
+entity.mapper.add_form:
+  route_name: entity.mapper.add_form
+  title: 'Add Data Mapper'
   appears_on:
-    - entity.path_mapper.collection
-
-entity.tag_mapper.add_form:
-  route_name: entity.tag_mapper.add_form
-  title: 'Add Tag Mapper'
-  appears_on:
-    - entity.tag_mapper.collection
+    - entity.mapper.collection

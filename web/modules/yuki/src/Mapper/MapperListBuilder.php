@@ -5,15 +5,15 @@ namespace Drupal\yuki\Mapper;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
-class TagMapperListBuilder extends ConfigEntityListBuilder {
+class MapperListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}
    */
   public function buildHeader() {
     $header['label'] = $this->t('Mapper');
-    $header['fields'] = $this->t('Fields');
-    //$header['weight'] = $this->t('Weight');
+    $header['data1'] = $this->t('Data');
+    $header['mapper'] = $this->t('Mapper');
     return $header + parent::buildHeader();
   }
 
@@ -22,10 +22,9 @@ class TagMapperListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    $row['fields'] = '';//$entity->get('fields')->count();
-    //$row['weight'] = $entity->get('weight');
+    $row['data1'] = $entity->get('data');
+    $row['mapper'] = $entity->getPluginId();
+
     return $row + parent::buildRow($entity);
   }
-
-
 }

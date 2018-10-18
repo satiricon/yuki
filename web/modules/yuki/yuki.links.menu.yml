@@ -1,14 +1,7 @@
 # Mapper entity menu items
-entity.path_mapper.collection:
-  title: 'Path Mapper'
-  route_name: entity.path_mapper.collection
-  description: 'List Path Mapper entities'
-  parent: system.admin_structure
-  weight: 99
-
-entity.tag_mapper.collection:
-  title: 'Tag Mapper'
-  route_name: entity.tag_mapper.collection
-  description: 'List Tag Mapper entities'
+entity.mapper.collection:
+  title: 'Data Mapper'
+  route_name: entity.mapper.collection
+  description: 'List Data Mapper entities'
   parent: system.admin_structure
   weight: 99

@@ -2,8 +2,8 @@
 
 namespace Drupal\yuki\Mapper;
 
-use Drupal\Core\Config\Entity\ConfigEntityInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
+use Drupal\yuki\Entity\MapperInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
 
 class PathMapperCollection {
@@ -26,8 +26,7 @@ class PathMapperCollection {
     return false;
   }
 
-
-  public function addPathInfoMapper(PathInfoMapper $mapper)
+  public function addPathInfoMapper(MapperInterface $mapper)
   {
     $this->mappers[] = $mapper;
   }

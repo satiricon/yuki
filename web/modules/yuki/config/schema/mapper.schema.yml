@@ -1,6 +1,6 @@
-yuki.tag_mapper.*:
+yuki.mapper.*:
   type: config_entity
-  label: Mapper Config
+  label: 'Mapper config'
   mapping:
     id:
       type: string
@@ -8,6 +8,9 @@ yuki.tag_mapper.*:
     label:
       type: label
       label: 'Label'
-    fields:
+    plugin:
       type: string
-      label: 'Fields'
+      label: 'Plugin ID'
+    data:
+      type: string
+      label: 'Data'
