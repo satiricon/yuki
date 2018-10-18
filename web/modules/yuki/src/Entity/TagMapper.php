@@ -32,8 +32,8 @@ use Drupal\yuki\Mapper\DataMapperInterface;
  *   },
  *   links = {
  *     "add-form" = "/admin/structure/tag/mapper/add",
- *     "edit-form" = "/admin/structure/tag/mapper/{mapper}/edit",
- *     "delete-form" = "/admin/structure/tag/mapper/{mapper}/delete",
+ *     "edit-form" = "/admin/structure/tag/mapper/{tag_mapper}/edit",
+ *     "delete-form" = "/admin/structure/tag/mapper/{tag_mapper}/delete",
  *     "collection" = "/admin/structure/tag/mapper"
  *   }
  * )

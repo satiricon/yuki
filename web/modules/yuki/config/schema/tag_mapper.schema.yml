@@ -11,4 +11,3 @@ yuki.tag_mapper.*:
     fields:
       type: string
       label: 'Fields'
-      cardinality: -1

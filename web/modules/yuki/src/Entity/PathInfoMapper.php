@@ -10,7 +10,7 @@ use Drupal\yuki\Mapper\DataMapperInterface;
  * Defines the Importer entity.
  *
  * @ConfigEntityType(
- *   id = "mapper",
+ *   id = "path_mapper",
  *   label = @Translation("Path Info Mapper"),
  *   handlers = {
  *     "list_builder" = "Drupal\yuki\Mapper\PathInfoMapperListBuilder",
@@ -23,7 +23,7 @@ use Drupal\yuki\Mapper\DataMapperInterface;
  *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *     },
  *   },
- *   config_prefix = "mapper",
+ *   config_prefix = "path_mapper",
  *   admin_permission = "administer site configuration",
  *   entity_keys = {
  *     "id" = "id",
@@ -32,8 +32,8 @@ use Drupal\yuki\Mapper\DataMapperInterface;
  *   },
  *   links = {
  *     "add-form" = "/admin/structure/path/mapper/add",
- *     "edit-form" = "/admin/structure/path/mapper/{mapper}/edit",
- *     "delete-form" = "/admin/structure/path/mapper/{mapper}/delete",
+ *     "edit-form" = "/admin/structure/path/mapper/{path_mapper}/edit",
+ *     "delete-form" = "/admin/structure/path/mapper/{path_mapper}/delete",
  *     "collection" = "/admin/structure/path/mapper"
  *   }
  * )

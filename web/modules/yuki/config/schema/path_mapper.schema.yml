@@ -1,4 +1,4 @@
-yuki.mapper.*:
+yuki.path_mapper.*:
   type: config_entity
   label: Mapper Config
   mapping:

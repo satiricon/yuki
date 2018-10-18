@@ -22,7 +22,7 @@ class TagMapperListBuilder extends ConfigEntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['label'] = $entity->label();
-    $row['fields'] = $entity->get('regexp')->count();
+    $row['fields'] = '';//$entity->get('fields')->count();
     //$row['weight'] = $entity->get('weight');
     return $row + parent::buildRow($entity);
   }
