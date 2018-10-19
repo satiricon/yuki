@@ -12,7 +12,7 @@ use Drupal\media\Annotation\MediaSource as MediaSource;
 use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
-use Drupal\yuki\Mapper\PathMapperCollection;
+use Drupal\yuki\Mapper\MapperCollection;
 use FFMpeg\FFProbe;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -33,8 +33,8 @@ class FFProbeAudio extends FFProbeMediaFile
 {
 
 
-  /** @var $pathMapper PathMapperCollection */
-  protected $pathMapper;
+  /** @var MapperCollection */
+  protected $mapper;
 
 	const METADATA_ATTRIBUTE_TITLE = 'title';
 
@@ -49,6 +49,10 @@ class FFProbeAudio extends FFProbeMediaFile
 	const METADATA_ATTRIBUTE_TRACK = 'track';
 
 	const METADATA_ATTRIBUTE_ALBUM = 'album';
+
+  const METADATA_ATTRIBUTE_DISC_NUM = 'disc';
+
+  const METADATA_ATTRIBUTE_DISC_TOTAL = 'disc_total';
 
   /**
    * Constructs a new class instance.
@@ -82,11 +86,11 @@ class FFProbeAudio extends FFProbeMediaFile
     ConfigFactoryInterface $config_factory,
     FileSystem $file_system,
     FFProbe $ffprobe,
-    PathMapperCollection $path_mapper)
+    MapperCollection $mapper)
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $entity_field_manager, $field_type_manager, $config_factory, $file_system, $ffprobe);
 
-    $this->pathMapper = $path_mapper;
+    $this->mapper = $mapper;
   }
 
 
@@ -119,8 +123,10 @@ class FFProbeAudio extends FFProbeMediaFile
 			static::METADATA_ATTRIBUTE_GENRE   => $this->t('Genre'),
 			static::METADATA_ATTRIBUTE_COMMENT => $this->t('Comment'),
 			static::METADATA_ATTRIBUTE_TRACK   => $this->t('Track'),
-      static::METADATA_ATTRIBUTE_ALBUM   => $this->t('Album')
-		];
+      static::METADATA_ATTRIBUTE_ALBUM   => $this->t('Album'),
+      static::METADATA_ATTRIBUTE_DISC_NUM   => $this->t('Disc Nº'),
+      static::METADATA_ATTRIBUTE_DISC_TOTAL   => $this->t('Disc Total'),
+    ];
 
 		return $attributes + parent::getMetadataAttributes();
 
@@ -130,15 +136,13 @@ class FFProbeAudio extends FFProbeMediaFile
 	 * {@inheritdoc}
 	 */
 	public function getMetadata(MediaInterface $media, $attribute_name) {
-		/** @var \Drupal\file\FileInterface $file */
+	  /** @var \Drupal\file\FileInterface $file */
 		$file = $media->get($this->configuration['source_field'])->entity;
 
 		if (!$file) {
 
 			return parent::getMetadata($media, $attribute_name);
 		}
-
-
 
 		$uri = $file->getFileUri();
 		$path = $this->fileSystem->realpath($uri);
@@ -177,7 +181,7 @@ class FFProbeAudio extends FFProbeMediaFile
 		   return $data[$attribute_name];
 		}
 
-    if($value = $this->pathMapper->map($attribute_name, $path)){
+    if($value = $this->mapper->map($attribute_name, $path)){
       return $value;
     }
 

@@ -47,7 +47,7 @@ services:
     tags:
       - { name: path_processor_inbound, priority: 200 }
   yuki.mapper_chain:
-    class: Drupal\yuki\Mapper\PathMapperCollection
+    class: Drupal\yuki\Mapper\MapperCollection
     calls:
       - method: setMapperStorage
         arguments:

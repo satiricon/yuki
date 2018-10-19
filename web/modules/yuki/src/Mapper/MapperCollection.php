@@ -6,9 +6,8 @@ use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
 use Drupal\yuki\Entity\Mapper;
 use Drupal\yuki\Entity\MapperInterface;
-use Drupal\yuki\Entity\PathInfoMapper;
 
-class PathMapperCollection {
+class MapperCollection {
 
   /** @var array */
   protected $mappers;
@@ -36,7 +35,7 @@ class PathMapperCollection {
     return false;
   }
 
-  public function addPathInfoMapper(MapperInterface $mapper)
+  public function addMapper(MapperInterface $mapper)
   {
     $this->mappers[] = $mapper;
   }
