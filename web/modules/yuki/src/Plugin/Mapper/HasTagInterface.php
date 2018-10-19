@@ -4,6 +4,6 @@ namespace Drupal\yuki\Plugin\Mapper;
 
 interface HasTagInterface {
 
-  public function get($tagName);
+  public function getTag($tagName);
 
 }

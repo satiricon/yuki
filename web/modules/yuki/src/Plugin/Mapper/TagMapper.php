@@ -25,11 +25,25 @@ class TagMapper extends MapperBase {
       if(strpos($row, $attribute_name) === 0){
         $rules = explode(' : ', $row);
 
+        $tag = $this->getTag($mediaSource, $rules[1]);
+        if(!empty($rules[2])) {
+          $matches = [];
+          preg_match($rules[2], $tag,$matches);
+
+          $tag = $matches[$attribute_name];
+        }
+
+        return $tag;
 
       }
     }
 
     return null;
 
+  }
+
+
+  public function getTag(HasTagInterface $mediaSource, $tag) {
+    return $mediaSource->getTag($tag);
   }
 }

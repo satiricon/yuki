@@ -14,6 +14,7 @@ use Drupal\media\MediaTypeInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
 use Drupal\yuki\Mapper\MapperCollection;
 use Drupal\yuki\Plugin\Mapper\HasPathInterface;
+use Drupal\yuki\Plugin\Mapper\HasTagInterface;
 use FFMpeg\FFProbe;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
