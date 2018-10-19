@@ -172,8 +172,9 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
 
 		$this->tags = $data;
 
-    if($attribute_name === 'name')
+    if($attribute_name === 'name' || $attribute_name === 'default_name')
     {
+
       return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
     }
 
