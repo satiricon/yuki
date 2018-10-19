@@ -22,8 +22,6 @@ class PathInfoMapper extends MapperBase {
     $matches = array();
     preg_match($regex, $data,$matches);
 
-    dump($matches);
-
     return $matches[$attribute_name];
   }
 
