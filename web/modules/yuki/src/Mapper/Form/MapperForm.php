@@ -65,14 +65,6 @@ class MapperForm extends EntityForm {
       '#disabled' => !$mapper->isNew(),
     ];
 
-    $form['data'] = [
-      '#type' => 'textarea',
-      '#default_value' => $mapper->getData() ? $mapper->getData() : '',
-      '#title' => $this->t('Data'),
-      '#description' => $this->t('The Data Necesary to resolve the fields'),
-      '#required' => TRUE,
-    ];
-
 
     $definitions = $this->mapperManager->getDefinitions();
     $options = [];
@@ -86,6 +78,14 @@ class MapperForm extends EntityForm {
       '#default_value' => $mapper->getPluginId(),
       '#options' => $options,
       '#description' => $this->t('The plugin to be used with this importer.'),
+      '#required' => TRUE,
+    ];
+
+    $form['data'] = [
+      '#type' => 'textarea',
+      '#default_value' => $mapper->getData() ? $mapper->getData() : '',
+      '#title' => $this->t('Data'),
+      '#description' => $this->t('The Data Necesary to resolve the fields'),
       '#required' => TRUE,
     ];
 

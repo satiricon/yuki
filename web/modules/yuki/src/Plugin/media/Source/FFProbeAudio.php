@@ -30,14 +30,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   default_thumbnail_filename = "audio.png"
  * )
  */
-class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
+class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagInterface
 {
 
 
   /** @var MapperCollection */
   protected $mapper;
 
+  /** @var string */
   protected $path;
+
+  /** @var array */
+  protected $tags;
 
 	const METADATA_ATTRIBUTE_TITLE = 'title';
 
@@ -120,14 +124,14 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
 	public function getMetadataAttributes() {
 
 		$attributes = [
-			static::METADATA_ATTRIBUTE_DATE    => $this->t('Date'),
-			static::METADATA_ATTRIBUTE_TITLE   => $this->t('Title'),
-			static::METADATA_ATTRIBUTE_ARTIST  => $this->t('Artist'),
-			static::METADATA_ATTRIBUTE_GENRE   => $this->t('Genre'),
-			static::METADATA_ATTRIBUTE_COMMENT => $this->t('Comment'),
-			static::METADATA_ATTRIBUTE_TRACK   => $this->t('Track'),
-      static::METADATA_ATTRIBUTE_ALBUM   => $this->t('Album'),
-      static::METADATA_ATTRIBUTE_DISC_NUM   => $this->t('Disc Nº'),
+			static::METADATA_ATTRIBUTE_DATE         => $this->t('Date'),
+			static::METADATA_ATTRIBUTE_TITLE        => $this->t('Title'),
+			static::METADATA_ATTRIBUTE_ARTIST       => $this->t('Artist'),
+			static::METADATA_ATTRIBUTE_GENRE        => $this->t('Genre'),
+			static::METADATA_ATTRIBUTE_COMMENT      => $this->t('Comment'),
+			static::METADATA_ATTRIBUTE_TRACK        => $this->t('Track'),
+      static::METADATA_ATTRIBUTE_ALBUM        => $this->t('Album'),
+      static::METADATA_ATTRIBUTE_DISC_NUM     => $this->t('Disc Nº'),
       static::METADATA_ATTRIBUTE_DISC_TOTAL   => $this->t('Disc Total'),
     ];
 
@@ -135,9 +139,14 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
 
 	}
 
-  public function getPath(){
+  public function getPath() {
 
 	  return $this->path;
+  }
+
+  public function getTag($tagName) {
+
+	  return $this->tags[$tagName];
   }
 
 
@@ -159,6 +168,8 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
 
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
+
+		$this->tags = $data;
 
     if($attribute_name === 'name')
     {
@@ -187,11 +198,13 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
       break;
     }
 
-		if(array_key_exists($attribute_name, $data)){
+		if(array_key_exists($attribute_name, $data)) {
+
 		   return $data[$attribute_name];
 		}
 
-    if($value = $this->mapper->map($attribute_name, $this)){
+    if($value = $this->mapper->map($attribute_name, $this)) {
+
       return $value;
     }
 
