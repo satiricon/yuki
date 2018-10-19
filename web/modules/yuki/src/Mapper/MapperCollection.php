@@ -4,6 +4,8 @@ namespace Drupal\yuki\Mapper;
 
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
+use Drupal\media\MediaInterface;
+use Drupal\media\MediaSourceInterface;
 use Drupal\yuki\Entity\Mapper;
 use Drupal\yuki\Entity\MapperInterface;
 
@@ -18,7 +20,7 @@ class MapperCollection {
   /** @var PluginManagerInterface */
   protected $mapperManager;
 
-  public function map($attribute_name, $path){
+  public function map($attribute_name, MediaSourceInterface $mediaSource){
 
     /** @var Mapper $mapper */
     foreach($this->mappers as $mapper){
@@ -26,7 +28,7 @@ class MapperCollection {
       /** @var \Drupal\yuki\Plugin\Mapper\MapperInterface $plugin */
       $plugin = $this->mapperManager->createInstance($mapper->getPluginId(), ['config' => $mapper]);
 
-      if($value = $plugin->map($attribute_name, $path)){
+      if($value = $plugin->map($attribute_name, $mediaSource)){
 
         return $value;
       }

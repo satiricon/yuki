@@ -13,6 +13,7 @@ use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
 use Drupal\yuki\Mapper\MapperCollection;
+use Drupal\yuki\Plugin\Mapper\HasPathInterface;
 use FFMpeg\FFProbe;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,12 +30,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   default_thumbnail_filename = "audio.png"
  * )
  */
-class FFProbeAudio extends FFProbeMediaFile
+class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface
 {
 
 
   /** @var MapperCollection */
   protected $mapper;
+
+  protected $path;
 
 	const METADATA_ATTRIBUTE_TITLE = 'title';
 
@@ -132,6 +135,12 @@ class FFProbeAudio extends FFProbeMediaFile
 
 	}
 
+  public function getPath(){
+
+	  return $this->path;
+  }
+
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -144,7 +153,8 @@ class FFProbeAudio extends FFProbeMediaFile
 			return parent::getMetadata($media, $attribute_name);
 		}
 
-		$uri = $file->getFileUri();
+    $uri = $file->getFileUri();
+
 		$path = $this->fileSystem->realpath($uri);
 
 		$format = $this->ffprobe->format($path);
@@ -181,10 +191,9 @@ class FFProbeAudio extends FFProbeMediaFile
 		   return $data[$attribute_name];
 		}
 
-    if($value = $this->mapper->map($attribute_name, $path)){
+    if($value = $this->mapper->map($attribute_name, $this)){
       return $value;
     }
-
 
     return parent::getMetadata($media, $attribute_name);
 	}
