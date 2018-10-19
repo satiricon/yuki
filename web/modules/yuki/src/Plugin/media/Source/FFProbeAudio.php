@@ -138,8 +138,15 @@ class FFProbeAudio extends FFProbeMediaFile
 			return parent::getMetadata($media, $attribute_name);
 		}
 
+
+
 		$uri = $file->getFileUri();
 		$path = $this->fileSystem->realpath($uri);
+
+    if($value = $this->pathMapper->map($attribute_name, $path)){
+      return $value;
+    }
+
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
 
@@ -174,9 +181,6 @@ class FFProbeAudio extends FFProbeMediaFile
 		   return $data[$attribute_name];
 		}
 
-    if($value = $this->pathMapper->map($attribute_name, $path)){
-      return $value;
-    }
 
     return parent::getMetadata($media, $attribute_name);
 	}

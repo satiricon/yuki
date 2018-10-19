@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class MapperBase extends PluginBase implements PluginMapperInterface, ContainerFactoryPluginInterface {
 
-  public function __construct(array $configuration, string $plugin_id, mixed $plugin_definition)
+  public function __construct(array $configuration, $plugin_id, $plugin_definition)
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
@@ -27,6 +27,7 @@ abstract class MapperBase extends PluginBase implements PluginMapperInterface, C
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+
     return new static(
       $configuration,
       $plugin_id,

@@ -52,6 +52,9 @@ services:
       - method: setMapperStorage
         arguments:
           - "@yuki.mapper_storage"
+      - method: setMapperManager
+        arguments:
+          - "@yuki.mapper_manager"
   yuki.saver_chain:
     class: Drupal\yuki\File\Saver\FileSaverChain
   yuki.saver.song:
