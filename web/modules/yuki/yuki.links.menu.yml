@@ -5,3 +5,10 @@ entity.mapper.collection:
   description: 'List Data Mapper entities'
   parent: system.admin_structure
   weight: 99
+# Mapper entity menu items
+entity.media_directory.collection:
+  title: 'Media Directory'
+  route_name: entity.media_directory.collection
+  description: 'List Media Directories'
+  parent: system.admin_structure
+  weight: 99

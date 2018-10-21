@@ -1,0 +1,13 @@
+yuki.media_directory.*:
+  type: config_entity
+  label: 'Media Directory Config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    directory:
+      type: string
+      label: 'Directory'
