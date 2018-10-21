@@ -7,7 +7,7 @@ services:
       - method: setSaverChain
         arguments:
           - "@yuki.saver_chain"
-  yuki.media.commands:
+  yuki.album.commands:
     class: \Drupal\yuki\Commands\AlbumsCommands
     tags:
       - { name: drush.command }
@@ -21,3 +21,11 @@ services:
       - method: setNodeStorage
         arguments:
           - "@yuki.node_storage"
+  yuki.media.commands:
+    class: \Drupal\yuki\Commands\MediaCommands
+    tags:
+      - { name: drush.command }
+    calls:
+      - method: setMediaStorage
+        arguments:
+          - "@yuki.media_storage"

@@ -2,8 +2,11 @@
 
 namespace Drupal\yuki\Commands;
 
+use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\file\FileStorageInterface;
+use Drupal\media\Entity\Media;
+use Drupal\Core\Language\LanguageInterface;
 
 class MediaCommands
 {
@@ -12,24 +15,39 @@ class MediaCommands
   /** @var FileStorageInterface */
   private $fileStorage;
 
-  /** @var  */
+  /** @var SqlEntityStorageInterface */
   private $mediaStorage;
 
   /**
-   * @command yuki:media:albums
-   * @aliases yual
+   * @command yuki:media:update-albums
+   * @aliases yuua
    *
    */
-  public function createAlbums()
+  public function updateAlbums()
   {
-    $this->fileStorage;
+    $query = $this->mediaStorage->getQuery();
+
+    $ids = $query->execute();
+
+    foreach($ids as $id){
+      $media = $this->mediaStorage->load($id);
+      $this->update($media);
+    }
 
   }
 
+  public function update(Media $media){
 
-  public function setFileStorage(FileStorageInterface $fileStorage) {
+    $translation = $media->getTranslation(LanguageInterface::LANGCODE_DEFAULT);
 
-    $this->fileStorage = $fileStorage;
+    $source = $media->getSource();
+
+    foreach ($translation->bundle->entity->getFieldMap() as $metadataAttributeName => $entityFieldName) {
+      $translation->set($entityFieldName, $source->getMetadata($translation, $metadataAttributeName));
+    }
+    $translation->setName($source->getMetadata($translation,'name'));
+
+    $media->save();
   }
 
   public function setMediaStorage(SqlEntityStorageInterface $mediaStorage) {

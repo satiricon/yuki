@@ -1,6 +1,9 @@
 <?php
 
 use \Drupal\Core\Entity\EntityTypeInterface;
+use \Drupal\media\Entity\Media;
+use \Drupal\file\Entity\File;
+use \Drupal\field\Entity\FieldConfig;
 /**
  * Implements hook_entity_base_field_info_alter().
  */
@@ -13,7 +16,21 @@ function yuki_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function yuki_file_insert(\Drupal\file\Entity\File $file)
+function yuki_file_insert(File $file)
 {
+
+}
+
+
+function yuki_media_presave(Media $media){
+
+
+  /*$field_definitions = $media->getFieldDefinitions();
+  foreach ($field_definitions as $field_name => $field_definition) {
+    if(($field_definition instanceof FieldConfig) && ($field_definition->getType() !== 'file')) {
+      dump($field_name);
+      $media->set($field_name, null);
+    }
+  }*/
 
 }
