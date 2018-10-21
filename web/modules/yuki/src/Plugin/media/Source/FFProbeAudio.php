@@ -147,6 +147,10 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
 
   public function getTag($tagName) {
 
+	  if(empty($this->tags[$tagName])) {
+	    $tagName = strtoupper($tagName);
+    }
+
 	  return $this->tags[$tagName];
   }
 
