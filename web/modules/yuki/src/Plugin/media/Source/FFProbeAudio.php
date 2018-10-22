@@ -171,6 +171,8 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
 
 		$path = $this->fileSystem->realpath($uri);
 
+		$this->path = $path;
+
 		$format = $this->ffprobe->format($path);
 		$data = $format->get('tags');
 
