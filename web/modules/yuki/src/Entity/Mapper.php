@@ -27,6 +27,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
+ *     "weight" = "weight",
  *   },
  *   links = {
  *     "add-form" = "/admin/structure/mapper/add",
@@ -66,6 +67,11 @@ class Mapper extends ConfigEntityBase implements MapperInterface {
    * @var string
    */
   protected $data;
+
+  /**
+   * @var integer
+   */
+  protected $weight;
 
   /**
    * @return string

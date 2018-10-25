@@ -14,3 +14,6 @@ yuki.mapper.*:
     data:
       type: string
       label: 'Data'
+    weight:
+      type: integer
+      label: 'Weight'
