@@ -39,7 +39,6 @@ class TagMapper extends MapperBase {
     }
 
     return null;
-
   }
 
 

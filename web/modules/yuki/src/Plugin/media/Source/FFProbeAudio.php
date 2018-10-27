@@ -221,7 +221,7 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
         break;
       case self::METADATA_ATTRIBUTE_CHROMA:
         return $this->fpCalc->generateFingerprint([$path]);
-        
+
         break;
     }
 
