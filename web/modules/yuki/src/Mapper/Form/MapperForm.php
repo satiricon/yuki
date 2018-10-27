@@ -93,7 +93,7 @@ class MapperForm extends EntityForm {
       '#type' => 'weight',
       '#default_value' => $mapper->get('weight') ? $mapper->get('weight') : '',
       '#title' => $this->t('Weight'),
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#delta'  => 999,
     ];
 
