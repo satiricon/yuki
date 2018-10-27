@@ -10,7 +10,7 @@ class FpcalcFactory
     /**
      * @return FpcalcProcess
      */
-    public function create(): FpcalcProcess
+    public static function create(): FpcalcProcess
     {
         return new FpcalcProcess(new Process(''));
     }

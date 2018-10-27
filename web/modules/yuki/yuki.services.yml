@@ -14,6 +14,9 @@ services:
   ffprobe:
     class: FFMpeg\FFProbe
     factory: 'ffmpeg:getFFProbe'
+  fpcalc:
+    class: Drupal\yuki\FPCalc\FpcalcProcess
+    factory: ['Drupal\yuki\FPCalc\FpcalcFactory', create]
   yuki.media_storage:
     class: \Drupal\Core\Entity\Sql\SqlContentEntityStorage
     factory: 'entity_type.manager:getStorage'

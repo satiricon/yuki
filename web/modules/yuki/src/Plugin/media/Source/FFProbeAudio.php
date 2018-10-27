@@ -12,6 +12,8 @@ use Drupal\media\Annotation\MediaSource as MediaSource;
 use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
 use Drupal\yuki\Entity\PathInfoMapper;
+use Drupal\yuki\FPCalc\FpcalcProcess;
+use Drupal\yuki\FPCalc\Options;
 use Drupal\yuki\Mapper\MapperCollection;
 use Drupal\yuki\Plugin\Mapper\HasPathInterface;
 use Drupal\yuki\Plugin\Mapper\HasTagInterface;
@@ -44,6 +46,9 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
   /** @var array */
   protected $tags;
 
+  /** @var FpcalcProcess */
+  protected $fpCalc;
+
 	const METADATA_ATTRIBUTE_TITLE = 'title';
 
 	const METADATA_ATTRIBUTE_ARTIST = 'artist';
@@ -61,6 +66,8 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
   const METADATA_ATTRIBUTE_DISC_NUM = 'disc';
 
   const METADATA_ATTRIBUTE_DISC_TOTAL = 'disc_total';
+
+  const METADATA_ATTRIBUTE_CHROMA = 'chroma';
 
   /**
    * Constructs a new class instance.
@@ -94,11 +101,13 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
     ConfigFactoryInterface $config_factory,
     FileSystem $file_system,
     FFProbe $ffprobe,
-    MapperCollection $mapper)
+    MapperCollection $mapper,
+    FpcalcProcess $fpCalc)
   {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $entity_field_manager, $field_type_manager, $config_factory, $file_system, $ffprobe);
 
     $this->mapper = $mapper;
+    $this->fpCalc = $fpCalc;
   }
 
 
@@ -114,7 +123,8 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
       $container->get('config.factory'),
       $container->get('file_system'),
       $container->get('ffprobe'),
-      $container->get('yuki.mapper_chain'));
+      $container->get('yuki.mapper_chain'),
+      $container->get('fpcalc'));
   }
 
 
@@ -134,6 +144,7 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
       static::METADATA_ATTRIBUTE_ALBUM        => $this->t('Album'),
       static::METADATA_ATTRIBUTE_DISC_NUM     => $this->t('Disc Nº'),
       static::METADATA_ATTRIBUTE_DISC_TOTAL   => $this->t('Disc Total'),
+      static::METADATA_ATTRIBUTE_CHROMA       => $this->t('Chroma Print'),
     ];
 
 		return $attributes + parent::getMetadataAttributes();
@@ -188,22 +199,30 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
       case self::METADATA_ATTRIBUTE_DATE:
       case strtoupper(self::METADATA_ATTRIBUTE_DATE):
         return empty($data['DATE']) ? $data['date'] : $data['DATE'];
-      break;
+
+        break;
 
       case self::METADATA_ATTRIBUTE_TITLE:
       case strtoupper(self::METADATA_ATTRIBUTE_TITLE):
         return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
-      break;
+
+        break;
 
       case self::METADATA_ATTRIBUTE_ARTIST:
       case strtoupper(self::METADATA_ATTRIBUTE_ARTIST):
         return empty($data['ARTIST']) ? $data['artist'] : $data['ARTIST'];
-      break;
+
+        break;
 
       case self::METADATA_ATTRIBUTE_ALBUM:
       case strtoupper(self::METADATA_ATTRIBUTE_ALBUM):
         return empty($data['ALBUM']) ? $data['album'] : $data['ALBUM'];
-      break;
+
+        break;
+      case self::METADATA_ATTRIBUTE_CHROMA:
+        return $this->fpCalc->generateFingerprint([$path]);
+        
+        break;
     }
 
 		if(array_key_exists($attribute_name, $data)) {
