@@ -12,8 +12,8 @@ class TranscodeStream extends LocalStream {
   {
     $target = parent::getTarget($uri);
 
-    
 
+    return $target;
   }
 
   /**
