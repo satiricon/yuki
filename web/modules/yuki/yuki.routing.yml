@@ -1,9 +1,20 @@
 yuki.files:
-  path: '/yuki/media/files/{scheme}'
+  path: '/yuki/media/files/download/{scheme}'
   defaults:
     _controller: 'Drupal\yuki\Controller\FileDownloadController::download'
     scheme: media
   requirements:
+    scheme: media|transcode
+    _access: 'TRUE'
+    _permission: 'access content'
+
+
+yuki.media.transcode:
+  path: '/yuki/media/transcode/{preset}/{filepath}'
+  defaults:
+    _controller: 'Drupal\yuki\Controller\FileDownloadController::download'
+  requirements:
+    filepath: .+
     _access: 'TRUE'
     _permission: 'access content'
 

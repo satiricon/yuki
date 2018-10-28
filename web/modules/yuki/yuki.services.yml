@@ -45,6 +45,10 @@ services:
     class: Drupal\yuki\StreamWrapper\MediaStream
     tags:
       - { name: stream_wrapper, scheme: media }
+  stream_wrapper.transcode:
+    class: Drupal\yuki\StreamWrapper\TranscodeStream
+    tags:
+      - { name: stream_wrapper, scheme: transcode }
   yuki.path_processor.files:
     class: Drupal\yuki\PathProcessor\PathProcessorFiles
     tags:

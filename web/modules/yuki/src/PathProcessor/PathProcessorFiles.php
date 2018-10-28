@@ -22,8 +22,24 @@ class PathProcessorFiles implements InboundPathProcessorInterface {
       $file_path = str_replace('/yuki/media/files', '', $path);
       $request->query->set('file', $file_path);
 
-      return '/yuki/media/files';
+      return '/yuki/media/files/download';
     }
+
+    if(strpos($path, '/yuki/media/transcode') === 0 && !$request->query->has('file')) {
+
+      $file_path = '/'.preg_replace('/^\/yuki\/media\/transcode\/.+\//iU', '', $path);
+
+      $options = [];
+
+      preg_match('/^\/yuki\/media\/transcode\/(?P<preset>.+)\//iU', $path, $options);
+
+      dump($options);
+      $request->query->set('file', $file_path);
+      $request->query->set('preset', $options['preset']);
+
+      return '/yuki/media/files/download/transcode';
+    }
+
     return $path;
   }
 
