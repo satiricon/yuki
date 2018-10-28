@@ -48,6 +48,7 @@ class MediaCommands
     $translation->setName($source->getMetadata($translation,'name'));
 
     $media->save();
+    unset($media);
   }
 
   public function setMediaStorage(SqlEntityStorageInterface $mediaStorage) {

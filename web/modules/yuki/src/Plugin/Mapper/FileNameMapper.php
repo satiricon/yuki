@@ -13,7 +13,7 @@ use Drupal\yuki\Entity\Mapper;
  *   label = @Translation("Regex Mapper")
  * )
  */
-class PathInfoMapper extends MapperBase {
+class FileNameMapper extends MapperBase {
 
   public function map($attribute_name, MediaSourceInterface $mediaSource) {
 
@@ -29,7 +29,7 @@ class PathInfoMapper extends MapperBase {
 
   public function getPath(HasPathInterface $source){
 
-    return $source->getPath();
+    return pathinfo($source->getPath(), PATHINFO_FILENAME);
   }
 
 

@@ -11,7 +11,7 @@ use Drupal\Core\File\FileSystem;
 use Drupal\media\Annotation\MediaSource as MediaSource;
 use Drupal\media\MediaInterface;
 use Drupal\media\MediaTypeInterface;
-use Drupal\yuki\Entity\PathInfoMapper;
+use Drupal\yuki\Entity\FileNameMapper;
 use Drupal\yuki\FPCalc\FpcalcProcess;
 use Drupal\yuki\FPCalc\Options;
 use Drupal\yuki\Mapper\MapperCollection;

@@ -39,7 +39,7 @@ class FpcalcProcess
         try {
 
             $this->process->mustRun();
-            dump($this->renderOutput($this->process->getOutput()));
+
             return $this->renderOutput($this->process->getOutput());
 
         } catch (ProcessFailedException $exception) {

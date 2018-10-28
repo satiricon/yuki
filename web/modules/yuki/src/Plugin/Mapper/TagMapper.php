@@ -19,14 +19,20 @@ class TagMapper extends MapperBase {
   {
     /** @var Mapper $mapper */
     $mapper = $this->configuration['config'];
-    $rows = explode('\n', $mapper->getData());
+
+    $rows = explode(PHP_EOL, $mapper->getData());
 
     foreach ($rows as $row){
+
       if(strpos($row, $attribute_name) === 0){
         $rules = explode(' : ', $row);
 
         $tag = $this->getTag($mediaSource, $rules[1]);
+
         if(!empty($rules[2])) {
+
+          $rules[2] = trim($rules[2], "\r");
+
           $matches = [];
           preg_match($rules[2], $tag,$matches);
 

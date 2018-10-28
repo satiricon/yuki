@@ -5,7 +5,8 @@ namespace Drupal\yuki\Mapper\Form;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\yuki\Entity\Mapper;
-use Drupal\yuki\Entity\PathInfoMapper;
+use Drupal\yuki\Entity\FileNameMapper;
+use Drupal\yuki\Entity\MapperInterface;
 use Drupal\yuki\Plugin\Mapper\MapperManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -105,7 +106,7 @@ class MapperForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    /** @var PathInfoMapper $mapper */
+    /** @var MapperInterface $mapper */
     $mapper = $this->entity;
     $status = $mapper->save();
 
