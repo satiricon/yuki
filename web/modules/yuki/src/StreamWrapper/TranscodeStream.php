@@ -5,62 +5,107 @@ namespace Drupal\yuki\StreamWrapper;
 use Drupal\Core\Routing\UrlGeneratorTrait;
 use Drupal\Core\StreamWrapper\LocalStream;
 use Drupal\Core\StreamWrapper\StreamWrapperInterface;
+use Symfony\Component\Process\Process;
 
 class TranscodeStream extends LocalStream {
 
-  protected function getTarget($uri = NULL)
+
+  protected function getPreset($uri = NULL)
   {
-    $target = parent::getTarget($uri);
+    $target = $this->getTarget($uri);
 
+    list($preset,) = explode('/', $target, 2);
 
-    return $target;
+    return $preset;
+  }
+
+  protected function getLocalPath($uri = NULL)
+  {
+    if (!isset($uri)) {
+      $uri = $this->uri;
+    }
+
+    $path = $this->getDirectoryPath() . '/' . $this->getTarget($uri);
+    $directory = pathinfo($path, PATHINFO_DIRNAME);
+
+    // @todo: hay que injectar?
+    $process = new Process(array('mkdir', '-p', $directory));
+    $process->mustRun();
+
+    return $path;
   }
 
   /**
-   * Gets the path that the wrapper is responsible for.
-   *
-   * @todo Review this method name in D8 per https://www.drupal.org/node/701358.
-   *
-   * @return string
-   *   String specifying the path.
+   * {@inheritdoc}
+   */
+  public function stream_open($uri, $mode, $options, &$opened_path) {
+    $this->uri = $uri;
+    $path = $this->getLocalPath();
+    dump($path);
+    die();
+    $this->handle = ($options & STREAM_REPORT_ERRORS) ? fopen($path, $mode) : @fopen($path, $mode);
+
+    if ((bool) $this->handle && $options & STREAM_USE_PATH) {
+      $opened_path = $path;
+    }
+
+    return (bool) $this->handle;
+  }
+
+  public function url_stat($uri, $flags)
+  {
+    $this->uri = $uri;
+    $path = $this->getLocalPath();
+
+    list(, $target) = explode('://', $uri, 2);
+
+    list(, $inputPath) = explode('/', $target, 2);
+
+    $process = new Process(
+      array('ffmpeg', '-i', '/'.$inputPath, '-y' ,'-c:a', 'libmp3lame', '-q:a', '0', $path));
+
+
+    $process->run();
+
+    dump($process->getErrorOutput());
+
+
+    return array(); // TODO: Devuelvo un array vacio o creo aca el archivo?
+  }
+
+
+  /**
+   * {@inheritdoc}
    */
   public function getDirectoryPath()
   {
-    return '/';
+    return '/tmp/yuki';
   }
 
+
+
   /**
-   * Returns the name of the stream wrapper for use in the UI.
-   *
-   * @return string
-   *   The stream wrapper name.
+   * {@inheritdoc}
    */
   public function getName()
   {
     return t('Transcode Media files');
   }
 
+
+
   /**
-   * Returns the description of the stream wrapper for use in the UI.
-   *
-   * @return string
-   *   The stream wrapper description.
+   * {@inheritdoc}
    */
   public function getDescription()
   {
     return t('On the fly transcode media files.');
   }
 
+
+
   /**
-   * Returns a web accessible URL for the resource.
-   *
-   * This function should return a URL that can be embedded in a web page
-   * and accessed from a browser. For example, the external URL of
-   * "youtube://xIpLd0WQKCY" might be
-   * "http://www.youtube.com/watch?v=xIpLd0WQKCY".
-   *
-   * @return string
-   *   Returns a string containing a web accessible URL for the resource.
+   * {@inheritdoc}
    */
   public function getExternalUrl()
   {
@@ -68,7 +113,7 @@ class TranscodeStream extends LocalStream {
     return $this->getUrlGenerator()
       ->generateFromRoute(
         'yuki.media.transcode',
-        ['filepath' => $path, 'preset' => 'mp3-v0'],
+        ['filepath' => $path, 'preset' => $this->getPreset()],
         ['absolute' => TRUE, 'path_processing' => FALSE]);
   }
 }
