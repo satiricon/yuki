@@ -1,8 +1,8 @@
-uuid: 47142a1d-2d59-4e6c-91f3-e015c787655d
+uuid: c6192bb4-caaa-401b-9a3f-4c27cdaa99ff
 langcode: en
 status: true
 dependencies: {  }
 id: mapper1
 label: mapper1
 regexp: '/.*\/(?P<genre>[a-z0-9]+)\/(?P<artist>[a-z0-9\s]+)\/[a-z0-9\s]+\s-\s(?P<album>.+)\s\((?P<date>[0-9]+)\)\s\{(?P<catnum>[a-z0-9-_]+)\}.*\/(?P<num>[0-9]{2})\s(?P<title>.*)\..*/i'
-weight: 2
+weight: 1

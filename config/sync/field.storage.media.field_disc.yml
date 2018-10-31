@@ -1,0 +1,20 @@
+uuid: 39c48074-6cc3-4c96-a68f-b1c0d5e57b32
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_disc
+field_name: field_disc
+entity_type: media
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

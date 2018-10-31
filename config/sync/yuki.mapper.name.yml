@@ -1,0 +1,9 @@
+uuid: 1bc7698a-5872-4c6b-9099-de24074b702b
+langcode: en
+status: true
+dependencies: {  }
+id: name
+label: Name
+plugin: mapper_tag
+data: "name : TIT2 : \r\nname : ©nam : \r\nname : Title : \r\nname : TITLE :  \r\ndefault_name : TIT2 : \r\ndefault_name : ©nam : \r\ndefault_name : Title : \r\ndefault_name : TITLE :  "
+weight: -10

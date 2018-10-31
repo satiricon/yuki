@@ -1,0 +1,9 @@
+uuid: fa81c23e-3354-456a-9437-5f26941a92dc
+langcode: en
+status: true
+dependencies: {  }
+id: disc_no_mapper
+label: 'Disc Nº'
+plugin: mapper_tag
+data: "disc : album : /.*disc\\s(?P<disc>[0-9]+).*/i\r\ndisc : TPOS : /(?P<disc>[0-9]+)\\/[0-9]+/i\r\ndisc : TPOS : \r\ndisc : disk : \r\ndisc : DISCNUMBER : \r\ndisc : Disc : "
+weight: -10

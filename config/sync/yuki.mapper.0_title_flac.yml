@@ -1,0 +1,9 @@
+uuid: e50f45a2-0b1e-4f1e-98c2-73d0065bd155
+langcode: en
+status: true
+dependencies: {  }
+id: 0_title_flac
+label: '0?-title.flac'
+plugin: mapper_regex
+data: '/(?P<track>[0-9]{1,2})-(?P<title>.+)\.([a-z0-9]{3,4})/i'
+weight: 5

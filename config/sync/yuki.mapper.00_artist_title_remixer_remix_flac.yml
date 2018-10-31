@@ -1,0 +1,9 @@
+uuid: f816f1b4-dd75-44db-b9b5-982c41c50c72
+langcode: en
+status: true
+dependencies: {  }
+id: 00_artist_title_remixer_remix_flac
+label: '00 artist - title (remixer Remix).flac'
+plugin: mapper_regex
+data: '/(?P<track>[0-9]{2})\s(?P<artist>.+)\s-\s(?P<title>.+)\s\((?P<remixer>.+) remix\)\.([a-z0-9]{3,4})/i'
+weight: 0

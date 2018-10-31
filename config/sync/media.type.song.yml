@@ -16,5 +16,9 @@ source_configuration:
   source_field: field_media_yuki_audio
 field_map:
   artist: field_artist
+  track: field_track
   album: field_album
+  disc: field_disc
+  disc_total: field_disc_total
+  chroma: field_chroma
   data: field_data

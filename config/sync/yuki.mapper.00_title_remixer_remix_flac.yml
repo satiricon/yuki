@@ -1,0 +1,9 @@
+uuid: 9a483daf-ef8a-4d65-8e68-8338edf5250a
+langcode: en
+status: true
+dependencies: {  }
+id: 00_title_remixer_remix_flac
+label: '00 title (remixer remix).flac'
+plugin: mapper_regex
+data: '/(?P<track>[0-9]{1,2})\s(?P<title>.+)\s\((?P<remixer>.+) remix\)\.([a-z0-9]{3,4})/i'
+weight: 6

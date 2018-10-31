@@ -1,0 +1,9 @@
+uuid: f03f3bab-cec8-492d-8c87-6cff6c7d1a5b
+langcode: en
+status: true
+dependencies: {  }
+id: artist
+label: Artist
+plugin: mapper_tag
+data: "artist : TPE1 : \r\nartist : ©ART : \r\nartist : Author : \r\nartist : ARTIST : \r\nartist : Artist : "
+weight: -10

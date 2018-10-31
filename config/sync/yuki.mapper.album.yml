@@ -1,0 +1,9 @@
+uuid: 76ee038d-e563-4ee7-ae5f-70e85e1eee5c
+langcode: en
+status: true
+dependencies: {  }
+id: album
+label: Album
+plugin: mapper_tag
+data: "album : TALB : \r\nalbum : ©alb : \r\nalbum : ALBUM : \r\nalbum : Album : "
+weight: -10

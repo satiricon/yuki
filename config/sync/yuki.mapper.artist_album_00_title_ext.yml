@@ -1,0 +1,9 @@
+uuid: b38099a9-1a31-48fa-b72f-28741b0c7205
+langcode: en
+status: true
+dependencies: {  }
+id: artist_album_00_title_ext
+label: 'artist - album - 00 title.ext'
+plugin: mapper_regex
+data: '/(?P<artist>.+)\s-\s(?P<album>.+)\s-\s(?P<track>[0-9]{2})\s(?P<title>.+)\.[a-z0-9]{3,4}/i'
+weight: -7

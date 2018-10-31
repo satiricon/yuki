@@ -1,0 +1,9 @@
+uuid: be49c66f-e4d4-49c6-822d-ce7f5bd6fd99
+langcode: en
+status: true
+dependencies: {  }
+id: 00_title_ext
+label: '00 title.ext'
+plugin: mapper_regex
+data: '/(?P<track>[0-9]{1,2})\s(?P<title>.+)\.([a-z0-9]{3,4})/i'
+weight: 8

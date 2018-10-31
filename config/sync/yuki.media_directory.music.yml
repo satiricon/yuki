@@ -1,0 +1,7 @@
+uuid: 8b93917d-347b-440d-adb1-d7d0a759beb5
+langcode: en
+status: true
+dependencies: {  }
+id: music
+label: Music
+directory: /media/david/3-teras2/music

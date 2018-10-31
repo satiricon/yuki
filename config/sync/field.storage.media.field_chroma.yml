@@ -1,20 +1,18 @@
-uuid: 3b8584b9-7224-4df1-bb52-da2cab66bdb1
+uuid: 94496e9c-61ad-487a-b4b3-1a473a5756ae
 langcode: en
 status: true
 dependencies:
   module:
-    - node
-id: node.field_fields
-field_name: field_fields
-entity_type: node
-type: string
+    - media
+id: media.field_chroma
+field_name: field_chroma
+entity_type: media
+type: string_long
 settings:
-  max_length: 255
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

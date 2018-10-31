@@ -5,8 +5,12 @@ dependencies:
   config:
     - field.field.media.song.field_album
     - field.field.media.song.field_artist
+    - field.field.media.song.field_chroma
     - field.field.media.song.field_data
+    - field.field.media.song.field_disc
+    - field.field.media.song.field_disc_total
     - field.field.media.song.field_media_yuki_audio
+    - field.field.media.song.field_track
     - media.type.song
   module:
     - yuki
@@ -31,12 +35,46 @@ content:
     third_party_settings: {  }
     type: string
     region: content
+  field_chroma:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
   field_data:
     weight: 2
     label: above
     settings: {  }
     third_party_settings: {  }
     type: default_probe_media_data_formatter
+    region: content
+  field_disc:
+    weight: 3
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_disc_total:
+    weight: 5
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_track:
+    weight: 4
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
     region: content
 hidden:
   created: true

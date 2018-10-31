@@ -1,0 +1,20 @@
+uuid: 254d4117-d62f-4189-a040-a5cf75e89182
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_disc_total
+field_name: field_disc_total
+entity_type: media
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

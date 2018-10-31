@@ -1,0 +1,23 @@
+uuid: 15caf100-9b0b-4d3a-b65e-7e03549ee66a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_track
+    - media.type.song
+id: media.song.field_track
+field_name: field_track
+entity_type: media
+bundle: song
+label: 'Track Nº'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

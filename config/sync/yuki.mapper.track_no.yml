@@ -1,0 +1,9 @@
+uuid: 938c9b85-7330-49d8-b120-c0bb1b44e139
+langcode: en
+status: true
+dependencies: {  }
+id: track_no
+label: 'Track Nº'
+plugin: mapper_tag
+data: "track : Album Track : \r\ntrack : TRCK : /(?P<track>[0-9]+)\\/[0-9]+/i\r\ntrack : TRCK : \r\ntrack : trkn : \r\ntrack : TRACKNUMBER : \r\ntrack : Track : \r\n"
+weight: -10

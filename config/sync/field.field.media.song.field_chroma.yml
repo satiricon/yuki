@@ -1,0 +1,19 @@
+uuid: bffaa4f9-2988-4468-84b4-e5928c4879f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_chroma
+    - media.type.song
+id: media.song.field_chroma
+field_name: field_chroma
+entity_type: media
+bundle: song
+label: Chroma
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

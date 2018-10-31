@@ -1,0 +1,9 @@
+uuid: 4cbe2746-7d73-429f-a5a0-53cd5ff90800
+langcode: en
+status: true
+dependencies: {  }
+id: 00_artist_album_title_flac
+label: '00 - artist - album - title.flac'
+plugin: mapper_regex
+data: '/^(?P<track>[0-9]{2})\s\-\s(?P<artist>.+)\s\-\s(?P<album>.+)\s\-\s(?P<title>.+)\.[a-z0-9]{3,4}/i'
+weight: -9
