@@ -10,6 +10,8 @@ use Symfony\Component\Process\Process;
 class TranscodeStream extends LocalStream {
 
 
+  protected $fileCreated = false;
+
   protected function getPreset($uri = NULL)
   {
     $target = $this->getTarget($uri);
@@ -27,12 +29,13 @@ class TranscodeStream extends LocalStream {
 
     $path = $this->getDirectoryPath() . '/' . $this->getTarget($uri);
     $directory = pathinfo($path, PATHINFO_DIRNAME);
+    $filename = pathinfo($path, PATHINFO_FILENAME);
 
     // @todo: hay que injectar?
     $process = new Process(array('mkdir', '-p', $directory));
     $process->mustRun();
 
-    return $path;
+    return $directory.'/'.$filename.'.mp3';
   }
 
   /**
@@ -41,8 +44,12 @@ class TranscodeStream extends LocalStream {
   public function stream_open($uri, $mode, $options, &$opened_path) {
     $this->uri = $uri;
     $path = $this->getLocalPath();
-    dump($path);
-    die();
+
+    if(!$this->fileCreated) {
+
+      $this->createFile($uri);
+    }
+
     $this->handle = ($options & STREAM_REPORT_ERRORS) ? fopen($path, $mode) : @fopen($path, $mode);
 
     if ((bool) $this->handle && $options & STREAM_USE_PATH) {
@@ -57,20 +64,33 @@ class TranscodeStream extends LocalStream {
     $this->uri = $uri;
     $path = $this->getLocalPath();
 
+    if(!$this->fileCreated) {
+
+      $this->createFile($uri);
+    }
+
+    if ($flags & STREAM_URL_STAT_QUIET || !file_exists($path)) {
+      return @stat($path);
+    }
+    else {
+      return stat($path);
+    }
+  }
+
+  protected function createFile($uri) {
+
+    $path = $this->getLocalPath();
+
     list(, $target) = explode('://', $uri, 2);
 
     list(, $inputPath) = explode('/', $target, 2);
 
-    $process = new Process(
-      array('ffmpeg', '-i', '/'.$inputPath, '-y' ,'-c:a', 'libmp3lame', '-q:a', '0', $path));
+    $client = new \GearmanClient();
+    $client->addServer();
+    $client->doBackground('transcode',
+      json_encode(array('input' => $inputPath, 'output' => $path)));
+    sleep(1);
 
-
-    $process->run();
-
-    dump($process->getErrorOutput());
-
-
-    return array(); // TODO: Devuelvo un array vacio o creo aca el archivo?
   }
 
 

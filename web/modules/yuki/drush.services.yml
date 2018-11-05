@@ -29,3 +29,7 @@ services:
       - method: setMediaStorage
         arguments:
           - "@yuki.media_storage"
+  yuki.workers.commands:
+    class: \Drupal\yuki\Commands\WorkersCommands
+    tags:
+      - { name: drush.command }

@@ -5,9 +5,11 @@ namespace Drupal\yuki\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\File\Stream;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class FileDownloadController extends ControllerBase {
@@ -45,8 +47,6 @@ class FileDownloadController extends ControllerBase {
 
     $uri = $scheme . '://' . $preset . $target;
 
-    dump(file_exists($uri));
-    die();
     if (file_stream_wrapper_valid_scheme($scheme) && file_exists($uri)) {
 
       $headers = $this->moduleHandler()->invokeAll('file_download', [$uri]);
@@ -57,17 +57,17 @@ class FileDownloadController extends ControllerBase {
         }
       }
 
-      if (count($headers)) {
+      return new Response(file_get_contents($uri), 200, $headers, $scheme !== 'private');
 
-        $stream  = new Stream($uri);
-
-        return new BinaryFileResponse($stream, 200, $headers, $scheme !== 'private');
-      }
-
-      throw new AccessDeniedHttpException();
     }
 
     throw new NotFoundHttpException();
+  }
+
+  public function downloadPart(Request $request) {
+
+    return new BinaryFileResponse('/tmp/yuki/mp3-v0'.$request->query->get('file'));
+
   }
 
 }
