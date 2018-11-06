@@ -66,7 +66,10 @@ class FileDownloadController extends ControllerBase {
 
   public function downloadPart(Request $request) {
 
-    return new BinaryFileResponse('/tmp/yuki/mp3-v0'.$request->query->get('file'));
+    return new BinaryFileResponse(
+      '/tmp/yuki/'.
+          $request->query->get('preset').
+          '/'.$request->query->get('file'));
 
   }
 

@@ -2,10 +2,18 @@
 
 namespace Drupal\yuki\Commands;
 
+use Drupal\Core\Config\Entity\ConfigEntityStorageInterface;
+use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Symfony\Component\Process\Process;
 
 class WorkersCommands
 {
+
+  /**
+   * @var SqlEntityStorageInterface
+   */
+  public $presetStorage;
+
   /**
    * @command yuki:transcode:start-workers
    * @aliases yuts
@@ -16,35 +24,34 @@ class WorkersCommands
     $worker = new \GearmanWorker();
     $worker->addServer();
 
+    $storage = $this->presetStorage;
+    $worker->addFunction('transcode', function($job) use ($storage) {
 
-    $worker->addFunction('transcode', function($job) {
+      $values = json_decode($job->workload(), true);
 
-      $workload = json_decode($job->workload());
+      $filename = pathinfo($values['output'], PATHINFO_FILENAME);
 
-      if(!file_exists($workload->output)){
-        /*$process = new Process(
-          array('ffmpeg',
-            '-i',
-            '/'.$workload->input,
-            '-c:a',
-            'libmp3lame',
-            '-q:a', '0', '-vn','-threads:0', '2',
-            '-f', 'dash', '-min_seg_duration', '2000000', '-use_template', '0',
-            $workload->output));*/
+      $values['filename'] = $filename;
 
-        $filename = pathinfo($workload->output, PATHINFO_FILENAME);
+      dump($values);
+      /** @var $preset \Drupal\yuki\Entity\Preset */
+      $preset = $storage->load($values['preset']);
+      $preset->setConfigurationValues($values);
+      dump($preset->getCommand());
+      $process = new Process($preset->getCommand());
+      $process->mustRun();
 
-        $process = new Process('ffmpeg -i "/'.$workload->input.'" -i "/'.$workload->input.'" -c:a libmp3lame -q:0:a 0 -q:1:a 4 -vn -map 0:a -map 1:a -f dash -min_seg_duration 9000000 -adaptation_sets "id=0,streams=a" -use_timeline 1 -use_template 1 -init_seg_name "'.$filename.'\$RepresentationID\$.m4s" -media_seg_name "'.$filename.'\$RepresentationID\$-\$Number%05d\$.m4s" "'.$workload->output.'"');
-
-        $process->run();
-
-        dump($process->getOutput(), $process->getErrorOutput());
-      }
+      dump($process->getOutput(), $process->getErrorOutput());
 
     });
 
     while ($worker->work());
 
+  }
+
+  public function setPresetStorage(ConfigEntityStorageInterface $presetStorage){
+
+    $this->presetStorage = $presetStorage;
   }
 
 

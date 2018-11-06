@@ -8,3 +8,8 @@ entity.media_directory.add_form:
   title: 'Add Media Directory'
   appears_on:
     - entity.media_directory.collection
+entity.preset.add_form:
+  route_name: entity.preset.add_form
+  title: 'Add Transcode Preset'
+  appears_on:
+    - entity.preset.collection

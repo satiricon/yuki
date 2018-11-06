@@ -14,6 +14,10 @@ class TranscodeStream extends LocalStream {
 
   protected function getPreset($uri = NULL)
   {
+    if (!isset($uri)) {
+      $uri = $this->uri;
+    }
+
     $target = $this->getTarget($uri);
 
     list($preset,) = explode('/', $target, 2);
@@ -80,16 +84,21 @@ class TranscodeStream extends LocalStream {
   protected function createFile($uri) {
 
     $path = $this->getLocalPath();
+    if(!file_exists($path)) {
+      list(, $target) = explode('://', $uri, 2);
 
-    list(, $target) = explode('://', $uri, 2);
+      list(, $inputPath) = explode('/', $target, 2);
 
-    list(, $inputPath) = explode('/', $target, 2);
+      $client = new \GearmanClient();
+      $client->addServer();
+      $client->doBackground('transcode',
+        json_encode(array(
+          'input' => '/'.$inputPath,
+          'output' => $path,
+          'preset'  => $this->getPreset())));
+      sleep(1);
+    }
 
-    $client = new \GearmanClient();
-    $client->addServer();
-    $client->doBackground('transcode',
-      json_encode(array('input' => $inputPath, 'output' => $path)));
-    sleep(1);
     $this->fileCreated = true;
 
   }

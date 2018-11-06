@@ -1,0 +1,13 @@
+yuki.preset.*:
+  type: config_entity
+  label: 'Preset config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    template:
+      type: string
+      label: 'Plugin ID'

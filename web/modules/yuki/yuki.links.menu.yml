@@ -12,3 +12,10 @@ entity.media_directory.collection:
   description: 'List Media Directories'
   parent: system.admin_structure
   weight: 99
+
+entity.preset.collection:
+  title: 'Preset'
+  route_name: entity.preset.collection
+  description: 'List Presets'
+  parent: system.admin_structure
+  weight: 99

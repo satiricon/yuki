@@ -1,8 +1,6 @@
 parameters:
   ffmpeg_bin: '/usr/bin/ffmpeg'
   ffprobe_bin: '/usr/bin/ffprobe'
-  metadata_resolve:
-    - { regex: '/album_artist/i', value: 'artist' }
   yuki.saver.song.extensions: ['flac', 'mp3', 'wav', 'aac', 'ape', 'alac']
 
 services:
@@ -29,6 +27,10 @@ services:
     class: Drupal\Core\Config\Entity\ConfigEntityStorage
     factory: 'entity_type.manager:getStorage'
     arguments: ['mapper']
+  yuki.preset_storage:
+    class: Drupal\Core\Config\Entity\ConfigEntityStorage
+    factory: 'entity_type.manager:getStorage'
+    arguments: ['preset']
   yuki.node_storage:
     class: \Drupal\Core\Entity\Sql\SqlContentEntityStorage
     factory: 'entity_type.manager:getStorage'

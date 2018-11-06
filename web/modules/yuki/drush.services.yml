@@ -33,3 +33,7 @@ services:
     class: \Drupal\yuki\Commands\WorkersCommands
     tags:
       - { name: drush.command }
+    calls:
+      - method: setPresetStorage
+        arguments:
+         - "@yuki.preset_storage"
