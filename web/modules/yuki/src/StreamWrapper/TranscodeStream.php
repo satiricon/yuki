@@ -90,6 +90,7 @@ class TranscodeStream extends LocalStream {
     $client->doBackground('transcode',
       json_encode(array('input' => $inputPath, 'output' => $path)));
     sleep(1);
+    $this->fileCreated = true;
 
   }
 
