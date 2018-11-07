@@ -33,13 +33,12 @@ class WorkersCommands
 
       $values['filename'] = $filename;
 
-      dump($values);
       /** @var $preset \Drupal\yuki\Entity\Preset */
       $preset = $storage->load($values['preset']);
       $preset->setConfigurationValues($values);
-      dump($preset->getCommand());
+
       $process = new Process($preset->getCommand());
-      $process->mustRun();
+      $process->run();
 
       dump($process->getOutput(), $process->getErrorOutput());
 
