@@ -40,8 +40,10 @@ class ProbeMediaDataFormatter extends FormatterBase {
   }
 
   protected function viewValue(FieldItemInterface $item) {
-    //$code = $item->get('code')->getValue();
+
     return [
+      '#theme' => 'item_list',
+      '#items' => $item->getValu,
     ];
   }
 }
