@@ -1,0 +1,7 @@
+uuid: c523a0d8-2299-4181-b83b-b9f28deeba64
+langcode: en
+status: true
+dependencies: {  }
+id: opus_126_vr
+label: 'Opus 126 vr'
+template: '["ffmpeg", "-i", "%input%", "-c:a", "libopus", "-b:a", "126000", "-compression_level", "10", "-vbr", "on", "-vn", "-f", "dash", "-min_seg_duration", "9000000", "-adaptation_sets", "id=0,streams=a", "-use_timeline", "1", "-use_template", "1", "-init_seg_name", "%filename%$RepresentationID$.m4s", "-media_seg_name", "%filename%$RepresentationID$-$Number%05d$.m4s", "%output%"]'

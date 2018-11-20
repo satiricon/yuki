@@ -1,0 +1,7 @@
+uuid: 2545527f-e4bb-4f15-a859-7f8457ef508e
+langcode: en
+status: true
+dependencies: {  }
+id: mp3_v2
+label: 'MP3 v2'
+template: "[\"ffmpeg\",\r\n    \"-i\", \"%input%\",\r\n    \"-c:a\", \"libmp3lame\",\r\n\"-q:0:a\", \"2\",\r\n\"-vn\",\r\n\"-f\", \"dash\",\r\n\"-min_seg_duration\", \"9000000\",\r\n\"-adaptation_sets\", \"id=0,streams=a\",\r\n\"-use_timeline\", \"1\",\r\n\"-use_template\", \"1\",\r\n\"-init_seg_name\", \"%filename%$RepresentationID$.m4s\",\r\n\"-media_seg_name\", \"%filename%$RepresentationID$-$Number%05d$.m4s\",\r\n\"%output%\"]"

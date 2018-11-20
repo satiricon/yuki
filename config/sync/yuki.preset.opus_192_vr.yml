@@ -1,0 +1,7 @@
+uuid: bc862fdb-747b-4df3-b4ef-3d3ba25a06be
+langcode: en
+status: true
+dependencies: {  }
+id: opus_192_vr
+label: 'Opus 192 vr'
+template: "[\"ffmpeg\",\r\n    \"-i\", \"%input%\",\r\n    \"-c:a\", \"libopus\",\r\n\"-b:a\", \"192000\",\r\n\"-compression_level\", \"10\",\r\n\"-vbr\", \"on\",\r\n\"-vn\",\r\n\"-f\", \"dash\",\r\n\"-min_seg_duration\", \"9000000\",\r\n\"-adaptation_sets\", \"id=0,streams=a\",\r\n\"-use_timeline\", \"1\",\r\n\"-use_template\", \"1\",\r\n\"-init_seg_name\", \"%filename%$RepresentationID$.m4s\",\r\n\"-media_seg_name\", \"%filename%$RepresentationID$-$Number%05d$.m4s\",\r\n\"%output%\"]"
