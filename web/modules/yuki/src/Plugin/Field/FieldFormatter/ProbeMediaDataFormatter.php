@@ -41,9 +41,29 @@ class ProbeMediaDataFormatter extends FormatterBase {
 
   protected function viewValue(FieldItemInterface $item) {
 
-    return [
-      '#theme' => 'item_list',
-      '#items' => $item->getValu,
-    ];
+
+    $element['ffprobe_data'] = array(
+      '#type' => 'details',
+      '#title' => $this->t('Media Data'),
+    );
+
+    $values = $item->getValue();
+    unset($values['_attributes']);
+
+    foreach($values as $key => $value){
+      $title = $item->get($key)->getDataDefinition()->getLabel()->getUntranslatedString();
+      $element['ffprobe_data'][$key] = [
+        '#type' => 'textfield',
+        '#title' => t($title),
+        '#value' =>  $value,
+        '#description' => '',
+        '#required' => false,
+        '#disabled' => true
+      ];
+
+    }
+
+    return $element;
   }
+
 }
