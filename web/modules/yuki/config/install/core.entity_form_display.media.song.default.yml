@@ -1,13 +1,22 @@
+uuid: ba611cde-170e-456c-9181-e0223309fe75
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.song.field_album
+    - field.field.media.song.field_artist
+    - field.field.media.song.field_chroma
+    - field.field.media.song.field_data
+    - field.field.media.song.field_disc
+    - field.field.media.song.field_disc_total
     - field.field.media.song.field_media_yuki_audio
-    - field.field.media.song.field_media_format
-    - field.field.media.song.field_media_bitrate
+    - field.field.media.song.field_track
     - media.type.song
   module:
     - file
+    - yuki
+_core:
+  default_config_hash: r6QBNSEGqiisLj_z0T5vEq3KWuFQtnhL0Vts-jgGuC0
 id: media.song.default
 targetEntityType: media
 bundle: song
@@ -15,51 +24,87 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_album:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_artist:
+    weight: 27
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_chroma:
+    weight: 26
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_data:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    type: default_probe_media_data_widget
+    region: content
+  field_disc:
+    weight: 7
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+  field_disc_total:
+    weight: 8
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
   field_media_yuki_audio:
-    weight: -6
+    weight: 0
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
     region: content
+  field_track:
+    weight: 9
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
   name:
     type: string_textfield
-    weight: -5
+    weight: 1
     region: content
     settings:
       size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_media_format:
-    type: string_textfield
-    weight: -4
-    region: content
-    settings:
-      size: 80
-      placeholder: ''
-    third_party_settings: {  }
-  field_media_bitrate:
-    type: string_textfield
-    weight: -3
-    region: content
-    settings:
-      size: 80
       placeholder: ''
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 100
+    weight: 4
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 5
+    weight: 2
     settings:
       match_operator: CONTAINS
       size: 60

@@ -1,0 +1,84 @@
+uuid: 707f2c39-5984-4d74-9d81-6738efa24430
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.song.field_album
+    - field.field.media.song.field_artist
+    - field.field.media.song.field_chroma
+    - field.field.media.song.field_data
+    - field.field.media.song.field_disc
+    - field.field.media.song.field_disc_total
+    - field.field.media.song.field_media_yuki_audio
+    - field.field.media.song.field_track
+    - media.type.song
+  module:
+    - yuki
+id: media.song.default
+targetEntityType: media
+bundle: song
+mode: default
+content:
+  field_album:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_artist:
+    weight: 7
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_chroma:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_data:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: default_probe_media_data_formatter
+    region: content
+  field_disc:
+    weight: 3
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_disc_total:
+    weight: 5
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_track:
+    weight: 4
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+hidden:
+  created: true
+  field_media_yuki_audio: true
+  name: true
+  thumbnail: true
+  uid: true
