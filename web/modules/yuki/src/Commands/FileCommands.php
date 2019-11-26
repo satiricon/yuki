@@ -37,7 +37,6 @@ class FileCommands
     foreach($ids as $id){
       /* @var $media File */
       $file = $this->fileStorage->load($id);
-
       $file->delete();
     }
   }
@@ -64,12 +63,14 @@ class FileCommands
 
   }
 
-  public function setSaverChain(SaverChainInterface $saverChain) {
+  public function setSaverChain(SaverChainInterface $saverChain)
+  {
     $this->saverChain = $saverChain;
   }
 
 
-  public function setFileStorage(FileStorageInterface $fileStorage) {
+  public function setFileStorage(FileStorageInterface $fileStorage)
+  {
 
     $this->fileStorage = $fileStorage;
   }

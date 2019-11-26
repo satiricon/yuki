@@ -22,7 +22,7 @@ services:
   yuki.file_storage:
     class: \Drupal\file\FileStorage
     factory: 'entity_type.manager:getStorage'
-    arguments: ['file']
+    arguments: ['yuki.file']
   yuki.mapper_storage:
     class: Drupal\Core\Config\Entity\ConfigEntityStorage
     factory: 'entity_type.manager:getStorage'
