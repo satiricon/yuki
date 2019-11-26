@@ -1,13 +1,12 @@
-uuid: 1338917f-25d5-425a-b5a9-0fd5fc51288d
+uuid: f0efc73f-b9b3-4b15-bc57-6b092adb34a1
 langcode: en
 status: true
 dependencies:
   module:
-    - media
     - node
-id: media.field_artist
+id: node.field_artist
 field_name: field_artist
-entity_type: media
+entity_type: node
 type: entity_reference
 settings:
   target_type: node

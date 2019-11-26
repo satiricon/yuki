@@ -1,15 +1,15 @@
-uuid: 397379ed-0c0a-46e4-8689-6d21dc23aaa3
+uuid: fc73286d-b82d-46c4-a42c-da46315de6e2
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_artist
-    - media.type.song
+    - field.storage.node.field_artist
+    - node.type.album
     - node.type.artist
-id: media.song.field_artist
+id: node.album.field_artist
 field_name: field_artist
-entity_type: media
-bundle: song
+entity_type: node
+bundle: album
 label: Artist
 description: ''
 required: false
