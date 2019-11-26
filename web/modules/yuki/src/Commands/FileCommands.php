@@ -8,13 +8,39 @@
 
 namespace Drupal\yuki\Commands;
 
+use Drupal\file\Entity\File;
+use Drupal\file\FileStorageInterface;
 use Drupal\yuki\File\Saver\SaverChainInterface;
 
 class FileCommands
 {
 
+  /**
+   * @var FileStorageInterface
+   */
+  private $fileStorage;
 
   private $saverChain;
+
+  /**
+   *
+   * @command yuki:files:delete
+   * @aliases yufid
+   *
+   */
+  public function deleteFiles()
+  {
+    $query = $this->fileStorage->getQuery();
+
+    $ids = $query->execute();
+
+    foreach($ids as $id){
+      /* @var $media File */
+      $file = $this->fileStorage->load($id);
+
+      $file->delete();
+    }
+  }
 
   /**
    * @param $path
@@ -40,6 +66,12 @@ class FileCommands
 
   public function setSaverChain(SaverChainInterface $saverChain) {
     $this->saverChain = $saverChain;
+  }
+
+
+  public function setFileStorage(FileStorageInterface $fileStorage) {
+
+    $this->fileStorage = $fileStorage;
   }
 
 }

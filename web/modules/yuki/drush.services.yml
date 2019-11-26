@@ -7,6 +7,9 @@ services:
       - method: setSaverChain
         arguments:
           - "@yuki.saver_chain"
+      - method: setFileStorage
+        arguments:
+          - "@yuki.file_storage"
   yuki.album.commands:
     class: \Drupal\yuki\Commands\AlbumsCommands
     tags:
