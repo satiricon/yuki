@@ -12,11 +12,27 @@ class MediaCommands
 {
 
 
-  /** @var FileStorageInterface */
-  private $fileStorage;
-
   /** @var SqlEntityStorageInterface */
   private $mediaStorage;
+
+  /**
+   * @command yuki:media:delete-all-media
+   * @aliases yudam
+   *
+   */
+  public function deleteMedia()
+  {
+    $query = $this->mediaStorage->getQuery();
+
+    $ids = $query->execute();
+
+    foreach($ids as $id){
+      /* @var $media Media */
+      $media = $this->mediaStorage->load($id);
+      
+      $media->delete();
+    }
+  }
 
   /**
    * @command yuki:media:update-albums
