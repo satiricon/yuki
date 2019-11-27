@@ -13,21 +13,26 @@ use Drupal\yuki\Entity\Mapper;
  *   label = @Translation("Regex Mapper")
  * )
  */
-class FileNameMapper extends MapperBase {
+class FileNameMapper extends MapperBase
+{
 
-  public function map($attribute_name, MediaSourceInterface $mediaSource) {
+  public function map($attribute_name, MediaSourceInterface $mediaSource)
+  {
 
     /** @var Mapper $mapper */
     $mapper = $this->configuration['config'];
     $regex = $mapper->getData();
 
     $matches = array();
-    preg_match($regex, $this->getPath($mediaSource),$matches);
-
-    return $matches[$attribute_name];
+    preg_match($regex, $this->getPath($mediaSource), $matches);
+    if (!empty($matches)) {
+      return $matches[$attribute_name];
+    }
+    return null;
   }
 
-  public function getPath(HasPathInterface $source){
+  public function getPath(HasPathInterface $source)
+  {
 
     return pathinfo($source->getPath(), PATHINFO_FILENAME);
   }
