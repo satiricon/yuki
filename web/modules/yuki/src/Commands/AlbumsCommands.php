@@ -56,15 +56,6 @@ class AlbumsCommands
 
       }
 
-
-      //I add a reference to an artist/s to the album
-      /*$artist = $song->get('field_artist')->value;
-      dump($artist);
-      $artists = $node->get('field_artist')->getValue();
-      dump($artists);
-      $artists[] = $artist;
-      $node->set('field_artist', $artists);*/
-
       $values = $node->get('field_song')->getValue();
       $values[] = $song;
       $node->set('field_song', $values);
