@@ -89,7 +89,7 @@ class Preset extends ConfigEntityBase implements PresetInterface {
    * @return array
    */
   public function getCommand() {
-    dump(json_decode($this->template));
+
     return json_decode($this->template);
   }
 }

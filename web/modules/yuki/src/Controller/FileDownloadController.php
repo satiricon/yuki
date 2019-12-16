@@ -48,7 +48,17 @@ class FileDownloadController extends ControllerBase {
     $uri = $scheme . '://' . $preset . $target;
     if (file_stream_wrapper_valid_scheme($scheme) && file_exists($uri)) {
 
+      $pathinfo = pathinfo($uri);
       $headers = $this->moduleHandler()->invokeAll('file_download', [$uri]);
+
+      $size = filesize($uri);
+      $start = 0; // Start byte
+      $end = $size - 1;
+      $length = $end - $start + 1;
+
+      $headers['Accept-Ranges']  = 'bytes';
+      $headers['Content-Range']  = 'bytes '.$start.'-'.$end.'/'.$size;
+      $headers['Content-Length'] = $length;
 
       foreach ($headers as $result) {
         if ($result == -1) {

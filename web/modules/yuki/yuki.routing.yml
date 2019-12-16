@@ -1,10 +1,3 @@
-yuki.files.mpd:
-  path: '/yuki/media/files/download/mpd'
-  defaults:
-    _controller: 'Drupal\yuki\Controller\FileDownloadController::downloadPart'
-  requirements:
-    _access: 'TRUE'
-
 yuki.files:
   path: '/yuki/media/files/download/{scheme}'
   defaults:
@@ -23,7 +16,7 @@ yuki.media_file_download:
     _access: 'TRUE'
 
 yuki.media.transcode:
-  path: '/yuki/media/transcode/{preset}/{filepath}.mpd'
+  path: '/yuki/media/transcode/{preset}/{filepath}'
   defaults:
     _controller: 'Drupal\yuki\Controller\FileDownloadController::download'
   requirements:

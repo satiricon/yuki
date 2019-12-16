@@ -36,17 +36,12 @@ class PathProcessorFiles implements InboundPathProcessorInterface {
       $options = [];
 
       preg_match('/^\/yuki\/media\/transcode\/(?P<preset>.+)\//iU', $path, $options);
-      dump($path, $options, $file_path, $extension);
 
       $request->query->set('scheme', 'transcode');
       $request->query->set('file', $file_path);
       $request->query->set('preset', $options['preset']);
 
-      if($extension === 'mpd') {
-        return '/yuki/media/files/download/transcode';
-      }
-
-      return '/yuki/media/files/download/mpd';
+      return '/yuki/media/files/download/transcode';
 
     }
 

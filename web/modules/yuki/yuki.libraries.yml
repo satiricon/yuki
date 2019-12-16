@@ -26,5 +26,7 @@ videojs.yuki:
   js:
     js/videojs.yuki.js:
       minified: false
+  dependencies:
+    - core/jquery
 
 

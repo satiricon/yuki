@@ -5,7 +5,7 @@
     const song = {
       sources: [{
         src: $element.data('url'),
-        type: 'application/dash+xml',
+        type: 'audio/mp3',
       }]
     };
     this.push(song);
