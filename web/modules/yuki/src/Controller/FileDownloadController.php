@@ -66,7 +66,7 @@ class FileDownloadController extends ControllerBase {
         }
       }
 
-      return new Response(file_get_contents($uri), 200, $headers, $scheme !== 'private');
+      return new BinaryFileResponse($uri, 200, $headers, $scheme !== 'private');
 
     }
 
