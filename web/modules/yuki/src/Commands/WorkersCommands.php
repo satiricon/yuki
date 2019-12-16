@@ -36,7 +36,7 @@ class WorkersCommands
       /** @var $preset \Drupal\yuki\Entity\Preset */
       $preset = $storage->load($values['preset']);
       $preset->setConfigurationValues($values);
-
+      dump(implode(" ", $preset->getCommand()));
       $process = new Process($preset->getCommand());
       $process->run();
 

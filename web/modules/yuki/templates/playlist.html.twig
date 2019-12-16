@@ -1,0 +1,15 @@
+<div>
+<audio id="player" class="video-js vjs-default-skin" playsinline>
+  <!--<source src="https://karen.david.desk/yuki/media/files/home/david/tmp/Surf/Instrumental%20Surf%20Rock/Gary%20Hoey/Monster%20Surf/Gary%20Hoey%20-%20Monster%20Surf%20-%2005%20-%20Peter%20Gunn.mp3"
+          type="audio/mp3">-->
+</audio>
+<ol class="playlist">
+{% for item in items %}
+  <li class="playlist__song">
+    <a data-index="{{ loop.index0 }}" data-url="{{ item.url }}" >
+      {{ item.name }}
+    </a>
+  </li>
+{% endfor %}
+</ol>
+</div>

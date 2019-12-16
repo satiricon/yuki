@@ -1,0 +1,30 @@
+videojs:
+  js:
+    //vjs.zencdn.net/7.5.5/video.min.js:
+      type: external
+      minified: true
+  css:
+    theme:
+      //vjs.zencdn.net/7.5.5/video-js.min.css:
+        type: external
+        minified: true
+videojs.playlist:
+  js:
+    js/videojs-playlist.min.js:
+      minified: true
+videojs.wavesurfer:
+  js:
+    js/wavesurfer.min.js:
+      minified: true
+    js/videojs.wavesurfer.min.js:
+      minified: true
+  css:
+    theme:
+      css/videojs.wavesurfer.min.css:
+        minified: true
+videojs.yuki:
+  js:
+    js/videojs.yuki.js:
+      minified: false
+
+

@@ -2,13 +2,11 @@
 
 namespace Drupal\yuki\StreamWrapper;
 
-use Drupal\Core\Routing\UrlGeneratorTrait;
 use Drupal\Core\StreamWrapper\LocalStream;
-use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Symfony\Component\Process\Process;
+use Drupal\Core\Url;
 
 class TranscodeStream extends LocalStream {
-
 
   protected $fileCreated = false;
 
@@ -68,7 +66,7 @@ class TranscodeStream extends LocalStream {
     $this->uri = $uri;
     $path = $this->getLocalPath();
 
-    if(!$this->fileCreated) {
+    if(!file_exists($path)) {
 
       $this->createFile($uri);
     }
@@ -109,6 +107,7 @@ class TranscodeStream extends LocalStream {
    */
   public function getDirectoryPath()
   {
+    //@hacer: hacer el directorio temporal configurable
     return '/tmp/yuki';
   }
 
@@ -139,11 +138,12 @@ class TranscodeStream extends LocalStream {
    */
   public function getExternalUrl()
   {
-    $path = str_replace('\\', '/', $this->getTarget());
-    return $this->getUrlGenerator()
-      ->generateFromRoute(
-        'yuki.media.transcode',
-        ['filepath' => $path, 'preset' => $this->getPreset()],
-        ['absolute' => TRUE, 'path_processing' => FALSE]);
+    $preset = $this->getPreset();
+    $path = str_replace($preset.'/', '', $this->getTarget());
+
+    $url = Url::fromRoute('yuki.media.transcode', ['filepath' => $path, 'preset' => $preset],
+      ['absolute' => TRUE, 'path_processing' => FALSE]);
+
+    return $url->toString();
   }
 }

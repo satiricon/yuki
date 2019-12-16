@@ -34,3 +34,14 @@ function yuki_media_presave(Media $media){
   }*/
 
 }
+
+/**
+ * Implements hook_theme().
+ */
+function yuki_theme() {
+  return [
+    'playlist' => [
+      'variables' => ['items' => []],
+    ],
+  ];
+}

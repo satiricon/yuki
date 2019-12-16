@@ -46,7 +46,6 @@ class FileDownloadController extends ControllerBase {
     $preset  = $request->query->get('preset');
 
     $uri = $scheme . '://' . $preset . $target;
-
     if (file_stream_wrapper_valid_scheme($scheme) && file_exists($uri)) {
 
       $headers = $this->moduleHandler()->invokeAll('file_download', [$uri]);
