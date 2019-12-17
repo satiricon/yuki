@@ -25,7 +25,8 @@ use Drupal\file\Entity\File as BaseFile;
  *     "id" = "fid",
  *     "label" = "filename",
  *     "langcode" = "langcode",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "owner" = "uid",
  *   }
  * )
  */
