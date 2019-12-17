@@ -10,3 +10,4 @@ dependencies:
   - text
   - taxonomy
   - field_ui
+  - jsonapi_extras
