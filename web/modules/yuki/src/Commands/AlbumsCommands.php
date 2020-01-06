@@ -3,7 +3,9 @@
 namespace Drupal\yuki\Commands;
 
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\file\FileStorageInterface;
+use Psr\Log\LoggerInterface;
 
 class AlbumsCommands
 {
@@ -17,6 +19,9 @@ class AlbumsCommands
 
   /** @var SqlEntityStorageInterface */
   private $nodeStorage;
+
+  /** @var LoggerInterface */
+  private $logger;
 
   /**
    * @command yuki:media:albums
@@ -39,14 +44,20 @@ class AlbumsCommands
 
       $title = $song->get('field_album')->value;
 
+      $this->logger->info("========Processing Song: " . $song->get('name')->value);
+
       if (empty($title)) {
         $title = 'Unknown';
       }
 
-      $node = array_shift($this->nodeStorage->loadByProperties(
-        ['title' => $title]));
+      $this->logger->info("Album Title: " . $title);
+
+      $nodes = $this->nodeStorage->loadByProperties(
+        ['title' => $title, 'type' => 'album']);
+      $node = array_shift($nodes);
 
       if (!$node) {
+        $this->logger->info("Album $title doesn't exists... Creating");
         $values = [
           'type' => 'album',
           'title' => $title
@@ -63,6 +74,8 @@ class AlbumsCommands
       $node->save();
 
       $this->addArtist($song, $node);
+
+      $this->logger->info("========End Processing Song");
     }
 
   }
@@ -71,8 +84,16 @@ class AlbumsCommands
   {
     $artistName = $song->get('field_artist')->value;
 
-    $artistNode = array_shift($this->nodeStorage->loadByProperties(
-      ['title' => $artistName]));
+    $this->logger->info("Artist: $artistName");
+
+    if (empty($artistName)) {
+      $this->logger->warning("Artist Name is Empty");
+      $artistName = 'Unknown';
+    }
+
+    $nodes = $this->nodeStorage->loadByProperties(
+      ['title' => $artistName, 'type' => 'artist']);
+    $artistNode = array_shift($nodes);
 
     if (!$artistNode) {
       $values = [
@@ -93,6 +114,8 @@ class AlbumsCommands
     });
 
     if (!$exists) {
+      $this->logger->info("Artist $artistName is not in the album, adding.");
+
       $artists[] = $artistNode;
       $album->set('field_artist', $artists);
       $album->save();
@@ -104,7 +127,6 @@ class AlbumsCommands
     }
 
   }
-
 
   public function setFileStorage(FileStorageInterface $fileStorage)
   {
@@ -122,6 +144,11 @@ class AlbumsCommands
   {
 
     $this->nodeStorage = $nodeStorage;
+  }
+
+  public function setLoggerFactory(LoggerChannelFactoryInterface $logger)
+  {
+    $this->logger = $logger->get(get_class($this));
   }
 
 

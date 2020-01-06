@@ -24,6 +24,9 @@ services:
       - method: setNodeStorage
         arguments:
           - "@yuki.node_storage"
+      - method: setLoggerFactory
+        arguments:
+          - "@logger.factory"
   yuki.media.commands:
     class: \Drupal\yuki\Commands\MediaCommands
     tags:
