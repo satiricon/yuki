@@ -67,9 +67,14 @@ class AlbumsCommands
 
       }
 
-      $values = $node->get('field_song')->getValue();
-      $values[] = $song;
-      $node->set('field_song', $values);
+      $node->set('title', $title);
+
+      if (!$this->songAlreadyInAlbum($song)) {
+        $this->logger->info("Song not in Album: " . $song->get('name')->value);
+        $values = $node->get('field_song')->getValue();
+        $values[] = $song;
+        $node->set('field_song', $values);
+      }
 
       $node->save();
 
@@ -126,6 +131,14 @@ class AlbumsCommands
       $artistNode->save();
     }
 
+  }
+
+  private function songAlreadyInAlbum($song)
+  {
+    $query = $this->nodeStorage->getQuery();
+    $album_ids = $query->condition('field_song', $song->id())
+      ->execute();
+    return !empty($album_ids);
   }
 
   public function setFileStorage(FileStorageInterface $fileStorage)
