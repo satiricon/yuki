@@ -1,6 +1,7 @@
 <?php
 
 namespace Drupal\yuki\Plugin\media\Source;
+
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
@@ -49,19 +50,19 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
   /** @var FpcalcProcess */
   protected $fpCalc;
 
-	const METADATA_ATTRIBUTE_TITLE = 'title';
+  const METADATA_ATTRIBUTE_TITLE = 'title';
 
-	const METADATA_ATTRIBUTE_ARTIST = 'artist';
+  const METADATA_ATTRIBUTE_ARTIST = 'artist';
 
-	const METADATA_ATTRIBUTE_DATE = 'date';
+  const METADATA_ATTRIBUTE_DATE = 'date';
 
-	const METADATA_ATTRIBUTE_GENRE = 'genre';
+  const METADATA_ATTRIBUTE_GENRE = 'genre';
 
-	const METADATA_ATTRIBUTE_COMMENT = 'comment';
+  const METADATA_ATTRIBUTE_COMMENT = 'comment';
 
-	const METADATA_ATTRIBUTE_TRACK = 'track';
+  const METADATA_ATTRIBUTE_TRACK = 'track';
 
-	const METADATA_ATTRIBUTE_ALBUM = 'album';
+  const METADATA_ATTRIBUTE_ALBUM = 'album';
 
   const METADATA_ATTRIBUTE_DISC_NUM = 'disc';
 
@@ -128,131 +129,106 @@ class FFProbeAudio extends FFProbeMediaFile implements HasPathInterface, HasTagI
   }
 
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getMetadataAttributes()
+  {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getMetadataAttributes() {
-
-		$attributes = [
-			static::METADATA_ATTRIBUTE_DATE         => $this->t('Date'),
-			static::METADATA_ATTRIBUTE_TITLE        => $this->t('Title'),
-			static::METADATA_ATTRIBUTE_ARTIST       => $this->t('Artist'),
-			static::METADATA_ATTRIBUTE_GENRE        => $this->t('Genre'),
-			static::METADATA_ATTRIBUTE_COMMENT      => $this->t('Comment'),
-			static::METADATA_ATTRIBUTE_TRACK        => $this->t('Track'),
-      static::METADATA_ATTRIBUTE_ALBUM        => $this->t('Album'),
-      static::METADATA_ATTRIBUTE_DISC_NUM     => $this->t('Disc Nº'),
-      static::METADATA_ATTRIBUTE_DISC_TOTAL   => $this->t('Disc Total'),
-      static::METADATA_ATTRIBUTE_CHROMA       => $this->t('Chroma Print'),
+    $attributes = [
+      static::METADATA_ATTRIBUTE_DATE => $this->t('Date'),
+      static::METADATA_ATTRIBUTE_TITLE => $this->t('Title'),
+      static::METADATA_ATTRIBUTE_ARTIST => $this->t('Artist'),
+      static::METADATA_ATTRIBUTE_GENRE => $this->t('Genre'),
+      static::METADATA_ATTRIBUTE_COMMENT => $this->t('Comment'),
+      static::METADATA_ATTRIBUTE_TRACK => $this->t('Track'),
+      static::METADATA_ATTRIBUTE_ALBUM => $this->t('Album'),
+      static::METADATA_ATTRIBUTE_DISC_NUM => $this->t('Disc Nº'),
+      static::METADATA_ATTRIBUTE_DISC_TOTAL => $this->t('Disc Total'),
+      static::METADATA_ATTRIBUTE_CHROMA => $this->t('Chroma Print'),
     ];
 
-		return $attributes + parent::getMetadataAttributes();
+    return $attributes + parent::getMetadataAttributes();
 
-	}
-
-  public function getPath() {
-
-	  return $this->path;
   }
 
-  public function getTag($tagName) {
+  public function getPath()
+  {
 
-	  if(empty($this->tags[$tagName])) {
-	    $tagName = strtoupper($tagName);
+    return $this->path;
+  }
+
+  public function getTag($tagName)
+  {
+
+    if (empty($this->tags[$tagName])) {
+      $tagName = strtoupper($tagName);
     }
 
-	  return $this->tags[$tagName];
+    $tagValue = empty($this->tags[$tagName]) ? null : $this->tags[$tagName];
+
+    return empty($tagValue) ? null : $tagValue;
   }
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getMetadata(MediaInterface $media, $attribute_name) {
-	  /** @var \Drupal\file\FileInterface $file */
-		$file = $media->get($this->configuration['source_field'])->entity;
+  /**
+   * {@inheritdoc}
+   */
+  public function getMetadata(MediaInterface $media, $attribute_name)
+  {
+    /** @var \Drupal\file\FileInterface $file */
+    $file = $media->get($this->configuration['source_field'])->entity;
 
-		if (!$file) {
+    if (!$file) {
 
-			return parent::getMetadata($media, $attribute_name);
-		}
+      return parent::getMetadata($media, $attribute_name);
+    }
 
     $uri = $file->getFileUri();
 
-		$path = $this->fileSystem->realpath($uri);
+    $path = $this->fileSystem->realpath($uri);
 
-		$this->path = $path;
+    $this->path = $path;
 
-		$format = $this->ffprobe->format($path);
-		$data = $format->get('tags');
+    $format = $this->ffprobe->format($path);
+    $data = $format->get('tags');
 
-		$this->tags = $data;
+    $this->tags = $data;
 
-    if($attribute_name === 'name' || $attribute_name === 'default_name')
-    {
-
-      return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
+    if ($attribute_name === self::METADATA_ATTRIBUTE_CHROMA) {
+      $value = $this->fpCalc->generateFingerprint([$path]);
     }
 
-		switch ($attribute_name) {
-      case self::METADATA_ATTRIBUTE_DATE:
-      case strtoupper(self::METADATA_ATTRIBUTE_DATE):
-        return empty($data['DATE']) ? $data['date'] : $data['DATE'];
+    if (array_key_exists($attribute_name, $data)) {
 
-        break;
-
-      case self::METADATA_ATTRIBUTE_TITLE:
-      case strtoupper(self::METADATA_ATTRIBUTE_TITLE):
-        return empty($data['TITLE']) ? $data['title'] : $data['TITLE'];
-
-        break;
-
-      case self::METADATA_ATTRIBUTE_ARTIST:
-      case strtoupper(self::METADATA_ATTRIBUTE_ARTIST):
-        return empty($data['ARTIST']) ? $data['artist'] : $data['ARTIST'];
-
-        break;
-
-      case self::METADATA_ATTRIBUTE_ALBUM:
-      case strtoupper(self::METADATA_ATTRIBUTE_ALBUM):
-        return empty($data['ALBUM']) ? $data['album'] : $data['ALBUM'];
-
-        break;
-      case self::METADATA_ATTRIBUTE_CHROMA:
-        return $this->fpCalc->generateFingerprint([$path]);
-
-        break;
+      $value = $data[$attribute_name];
     }
 
-		if(array_key_exists($attribute_name, $data)) {
+    if ($test = $this->mapper->map($attribute_name, $this)) {
 
-		   return $data[$attribute_name];
-		}
-
-    if($value = $this->mapper->map($attribute_name, $this)) {
-
-      return $value;
+      $value = $test;
     }
 
-    return parent::getMetadata($media, $attribute_name);
-	}
+    return empty($value) ? parent::getMetadata($media, $attribute_name) : $value;
+  }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function createSourceField(MediaTypeInterface $type) {
+  /**
+   * {@inheritdoc}
+   */
+  public function createSourceField(MediaTypeInterface $type)
+  {
 
-		return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac ape alac m4a webm']);
-	}
+    return parent::createSourceField($type)->set('settings', ['file_extensions' => 'mp3 wav aac flac ape alac m4a webm']);
+  }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function prepareViewDisplay(MediaTypeInterface $type, EntityViewDisplayInterface $display) {
-		$display->setComponent($this->getSourceFieldDefinition($type)->getName(), [
-			'type' => 'file_audio',
-		]);
-	}
+  /**
+   * {@inheritdoc}
+   */
+  public function prepareViewDisplay(MediaTypeInterface $type, EntityViewDisplayInterface $display)
+  {
+    $display->setComponent($this->getSourceFieldDefinition($type)->getName(), [
+      'type' => 'file_audio',
+    ]);
+  }
 
 }

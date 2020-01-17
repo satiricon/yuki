@@ -13,7 +13,8 @@ use Drupal\yuki\Entity\Mapper;
  *   label = @Translation("Tag Mapper")
  * )
  */
-class TagMapper extends MapperBase {
+class TagMapper extends MapperBase
+{
 
   public function map($attribute_name, MediaSourceInterface $mediaSource)
   {
@@ -21,25 +22,23 @@ class TagMapper extends MapperBase {
     $mapper = $this->configuration['config'];
 
     $rows = explode(PHP_EOL, $mapper->getData());
-
-    foreach ($rows as $row){
-
-      if(strpos($row, $attribute_name) === 0){
+    foreach ($rows as $row) {
+      if (strpos($row, $attribute_name) === 0) {
         $rules = explode(' : ', $row);
+        $value = $this->getTag($mediaSource, $rules[1]);
 
-        $tag = $this->getTag($mediaSource, $rules[1]);
-
-        if(!empty($rules[2])) {
+        if ((!empty($rules[2]) && $rules[2] !== "\r") && $value) {
 
           $rules[2] = trim($rules[2], "\r");
 
           $matches = [];
-          preg_match($rules[2], $tag,$matches);
+          preg_match($rules[2], $value, $matches);
 
-          $tag = $matches[$attribute_name];
+          $value = $matches[$attribute_name];
         }
-
-        return $tag;
+        if(!empty($value)) {
+          return $value;
+        }
 
       }
     }
@@ -48,7 +47,8 @@ class TagMapper extends MapperBase {
   }
 
 
-  public function getTag(HasTagInterface $mediaSource, $tag) {
+  public function getTag(HasTagInterface $mediaSource, $tag)
+  {
     return $mediaSource->getTag($tag);
   }
 }
