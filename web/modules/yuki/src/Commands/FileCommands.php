@@ -60,7 +60,22 @@ class FileCommands
     {
       $file = $this->saverChain->save($object);
     }
+  }
+  /**
+   * @command yuki:files:update
+   * @aliases yufiu
+   *
+   */
+  public function filesUpdate(){
+    $query = $this->fileStorage->getQuery();
 
+    $ids = $query->execute();
+
+    foreach($ids as $id){
+      /* @var $media File */
+      $file = $this->fileStorage->load($id);
+      $file->save();
+    }
   }
 
   public function setSaverChain(SaverChainInterface $saverChain)
