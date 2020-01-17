@@ -23,7 +23,7 @@
         "drupal/console": "^1.0.2",
         "drupal/content_sync": "^2.0",
         "drupal/core": "~8.8",
-        "drupal/devel": "^2",
+        "drupal/devel": "^3.0",
         "drupal/hook_event_dispatcher": "^1.19",
         "drupal/jsonapi_extras": "^3.13",
         "drupal/media_entity_facebook": "^2.0@alpha",
