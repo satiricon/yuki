@@ -36,8 +36,6 @@ class AlbumsCommands
     $ids = $query->condition('bundle', 'song')
       ->execute();
 
-    //dump(\Drupal::entityManager()->getFieldDefinitions('media', 'song'));
-
     $songs = $this->mediaStorage->loadMultiple($ids);
 
     foreach ($songs as $song) {
@@ -92,7 +90,9 @@ class AlbumsCommands
     $this->logger->info("Artist: $artistName");
 
     if (empty($artistName)) {
-      $this->logger->warning("Artist Name is Empty");
+      $song->save();
+      $this->logger->warning("Artist Name is Empty. Song:" . $song->get('name')->value);
+      $this->logger->warning("Album:" . $album->get('title')->value);
       $artistName = 'Unknown';
     }
 
