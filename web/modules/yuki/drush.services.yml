@@ -27,6 +27,12 @@ services:
       - method: setLoggerFactory
         arguments:
           - "@logger.factory"
+      - method: setEventFactory
+        arguments:
+          - "@yuki.album_event.factory"
+      - method: setEventDispatcher
+        arguments:
+          - "@event_dispatcher"
   yuki.media.commands:
     class: \Drupal\yuki\Commands\MediaCommands
     tags:

@@ -5,7 +5,10 @@ namespace Drupal\yuki\Commands;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\file\FileStorageInterface;
+use Drupal\yuki\Event\AlbumEventFactory;
+use Drupal\yuki\Event\NodeEventFactoryInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AlbumsCommands
 {
@@ -23,6 +26,13 @@ class AlbumsCommands
   /** @var LoggerInterface */
   private $logger;
 
+  /** @var NodeEventFactoryInterface */
+  private $eventFactory;
+
+  /**
+   * @var EventDispatcherInterface
+   */
+  private $eventDispatcher;
   /**
    * @command yuki:media:albums
    * @aliases yual
@@ -74,6 +84,9 @@ class AlbumsCommands
         $node->set('field_song', $values);
       }
 
+      $event = $this->getEventFactory()->create($node);
+      $this->logger->info($event->getDispatcherType());
+      $this->getEventDispatcher()->dispatch($event->getDispatcherType(), $event);
       $node->save();
 
       $this->addArtist($song, $node);
@@ -162,6 +175,40 @@ class AlbumsCommands
   public function setLoggerFactory(LoggerChannelFactoryInterface $logger)
   {
     $this->logger = $logger->get(get_class($this));
+  }
+
+  /**
+   * @param EventDispatcherInterface $eventDispatcher
+   */
+  public function setEventDispatcher(EventDispatcherInterface $eventDispatcher) {
+
+    $this->eventDispatcher = $eventDispatcher;
+  }
+
+  /**
+   * @return EventDispatcherInterface
+   */
+  public function getEventDispatcher()
+  {
+
+    return $this->eventDispatcher;
+  }
+
+  /**
+   * @param NodeEventFactoryInterface $eventFactory
+   */
+  public function setEventFactory(NodeEventFactoryInterface $eventFactory) {
+
+    $this->eventFactory = $eventFactory;
+  }
+
+  /**
+   * @return NodeEventFactoryInterface
+   */
+  public function getEventFactory()
+  {
+
+    return $this->eventFactory;
   }
 
 
