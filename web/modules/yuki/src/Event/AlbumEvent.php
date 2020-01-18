@@ -6,7 +6,7 @@ use Drupal\hook_event_dispatcher\Event\EventInterface;
 use Drupal\node\Entity\Node;
 use Symfony\Component\EventDispatcher\Event;
 
-class AlbumEvent extends Event implements EventInterface
+class AlbumEvent extends Event implements NodeEventInterface
 {
 
   const EVENT_ALBUM_NEW = 'yuki.album.new';
@@ -18,19 +18,19 @@ class AlbumEvent extends Event implements EventInterface
    */
   private $album;
 
-  public function __construct(Node $album)
+  public function __construct(Node $node)
   {
-    $this->setAlbum($album);
+    $this->setNode($node);
   }
 
   /**
-   * @param Node $album
+   * @param Node $node
    * @return AlbumEvent $this
    */
-  public function setAlbum(Node $album)
+  public function setNode(Node $node)
   {
-    $this->checkNodeisAlbum($album);
-    $this->album = $album;
+    $this->checkNodeisAlbum($node);
+    $this->album = $node;
 
     return $this;
   }
@@ -38,23 +38,23 @@ class AlbumEvent extends Event implements EventInterface
   /**
    * @return Node
    */
-  public function getAlbum()
+  public function getNode()
   {
 
     return $this->album;
   }
 
-  private function checkNodeisAlbum(Node $album)
+  private function checkNodeisAlbum(Node $node)
   {
-    if ($album->getType() !== 'album') {
+    if ($node->getType() !== 'album') {
       throw new \InvalidArgumentException("Album Event expects a Node of album type. " .
-        $album->getType() . "given.");
+        $node->getType() . "given.");
     }
   }
 
   public function getDispatcherType()
   {
-     if($this->album->isNew()) {
+     if($this->node->isNew()) {
        return self::EVENT_ALBUM_NEW;
      }
      return self::EVENT_ALBUM_MOD;

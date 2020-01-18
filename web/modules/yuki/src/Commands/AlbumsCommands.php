@@ -84,19 +84,21 @@ class AlbumsCommands
         $node->set('field_song', $values);
       }
 
+      $this->addArtist($song, $node);
+
       $event = $this->getEventFactory()->create($node);
       $this->logger->info($event->getDispatcherType());
       $this->getEventDispatcher()->dispatch($event->getDispatcherType(), $event);
-      $node->save();
+      $node = $event->getNode();
 
-      $this->addArtist($song, $node);
+      $node->save();
 
       $this->logger->info("========End Processing Song");
     }
 
   }
 
-  private function addArtist($song, $album)
+  private function addArtist($song, &$album)
   {
     $artistName = $song->get('field_artist')->value;
 
@@ -136,7 +138,6 @@ class AlbumsCommands
 
       $artists[] = $artistNode;
       $album->set('field_artist', $artists);
-      $album->save();
 
       $artistAlbums = $artistNode->get('field_albums')->referencedEntities();
       $artistAlbums[] = $album;
